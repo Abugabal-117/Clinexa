@@ -1,0 +1,681 @@
+% Clinexa Medical System - Software Design Document (SDD)
+\documentclass[12pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Set line spacing to 1.5
+\setstretch{1.5}
+
+% Code listing settings
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!10},
+    numbers=left,
+    numberstyle=\tiny,
+    tabsize=4
+}
+
+% Hyperref settings - remove red boxes and colors
+\hypersetup{
+    colorlinks=false,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+    citecolor=black,
+    pdfborder={0 0 0},
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Fall 2025}
+\lhead{Clinexa Medical System - Design Document}
+\rfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{0.3cm}
+    
+    {\LARGE Zewail City of Science, Technology and Innovation\par}
+    \vspace{0.3cm}
+    {\Large University of Science and Technology\par}
+    \vspace{0.2cm}
+    {\large School of Computational Sciences and Artificial Intelligence\par}
+    \vspace{0.2cm}
+    {\normalsize CSAI 203 - Fall 2025\par}
+    \vspace{0.1cm}
+    {\normalsize Introduction to Software Engineering\par}
+    \vspace{1cm}
+    
+    {\Huge\bfseries Software Design Document (SDD)\par}
+    \vspace{0.8cm}
+    {\LARGE\bfseries Project: Clinexa Medical System\par}
+    \vspace{0.5cm}
+    {\large Version 1.0\par}
+    
+    {\normalsize Team Number: 26\par}
+    \vspace{0.2cm}
+    {\normalsize Email: \href{mailto:s-ahmed.ragab@zewailcity.edu.eg}{s-ahmed.ragab@zewailcity.edu.eg}\par}
+    \vspace{1.5cm}
+    
+    {\Large\bfseries Team Members\par}
+    \vspace{0.8cm}
+    
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{ID} & \textbf{Email} \\ \hline
+    Ahmed Ragab & 202400437 & s-ahmed.ragab@zewailcity.edu.eg \\ \hline
+    Mosab Kamal & 202402297 & s-mosab.gabal@zewailcity.edu.eg \\ \hline
+    Mohamed Maher & 202301798 & s-mohammed.kafafy@zewailcity.edu.eg \\ \hline
+    Abdelrhman Khaled & 202400161 & s-abdelrhman.abdelhamid@zewailcity.edu.eg \\ \hline
+    \end{tabular}
+    
+    \vfill
+    
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% =======================
+% SECTION 1: INTRODUCTION
+% =======================
+\section{Introduction}
+
+\subsection{Purpose of the Document}
+This Software Design Document (SDD) defines the architectural and detailed design of the Clinexa Medical System based on the Software Requirements Specification (SRS). The document serves as a comprehensive blueprint that translates functional and non-functional requirements into a structured design that can be implemented by the development team.
+
+The SDD provides:
+\begin{itemize}
+    \item A clear explanation of the system's architectural structure and design patterns
+    \item Detailed descriptions of system components and their interactions
+    \item Visual representations through UML diagrams and UI mockups
+    \item Data storage design and file structure specifications
+    \item Technology stack and implementation guidelines
+\end{itemize}
+
+\subsection{Scope of the Design Phase}
+This design document covers the complete system design for the Clinexa Medical System, including:
+
+\begin{itemize}
+    \item \textbf{Architectural Design:} High-level system architecture using a monolithic architectural style, component identification, and interaction patterns.
+    \item \textbf{Design Patterns:} Implementation of the Model-View-Controller (MVC) design pattern.
+    \item \textbf{Module Design:} Detailed design of User Management, Authentication, Patient Management, Doctor Management, Appointment Management, Medical Records, Notifications, Reports, and Search functionality.
+    \item \textbf{Data Storage Design:} File-based data storage structure using text files.
+    \item \textbf{User Interface Design:} Wireframes and mockups for key user interfaces.
+    \item \textbf{Component Interactions:} UML diagrams illustrating system behavior.
+\end{itemize}
+
+\subsection{Intended Audience}
+This Software Design Document is intended for:
+
+\begin{itemize}
+    \item \textbf{Software Developers:} Primary audience who will implement the system.
+    \item \textbf{Quality Assurance Testers:} For understanding system structure and creating test plans.
+    \item \textbf{Project Stakeholders:} Project managers and healthcare administrators.
+    \item \textbf{Course Instructors and Evaluators:} For assessing design quality.
+    \item \textbf{Future Maintainers:} Developers maintaining or extending the system.
+\end{itemize}
+
+\subsection{Overview of the Contents}
+\begin{itemize}
+    \item \textbf{Section 1 – Introduction:} Purpose, scope, audience, and document overview.
+    \item \textbf{Section 2 – System Overview:} High-level summary, design goals, and constraints.
+    \item \textbf{Section 3 – Architectural Design:} System architecture and technology stack.
+    \item \textbf{Section 4 – Detailed Design:} MVC pattern, UML diagrams, UI/UX design, and data design.
+    \item \textbf{Section 5 – Conclusion:} Summary of design decisions and next steps.
+\end{itemize}
+
+\newpage
+
+% =======================
+% SECTION 2: SYSTEM OVERVIEW
+% =======================
+\section{System Overview}
+
+\subsection{Brief Description of the System}
+Clinexa is a web-based healthcare management system designed to streamline interaction between healthcare providers and patients. The platform replaces traditional paper-based processes with a digital solution accessible through web browsers.
+
+Patients can create accounts, search for doctors by specialization, book appointments, view medical history, receive automated email reminders, and submit feedback. Doctors can manage availability schedules, view appointments, access patient histories, create medical records, generate reports, and respond to feedback.
+
+\subsection{Key Design Goals and Constraints}
+
+\subsubsection{Design Goals}
+
+\begin{itemize}
+    \item \textbf{Usability:} Intuitive interface requiring minimal training, accessible through modern web browsers.
+    \item \textbf{Efficiency:} Streamlined processes for appointment scheduling and medical record retrieval.
+    \item \textbf{Reliability:} 99.9\% uptime with recovery time under 5 minutes.
+    \item \textbf{Maintainability:} Modular design with clear separation of concerns through MVC pattern.
+    \item \textbf{Security:} Robust authentication with password hashing and role-based access control.
+\end{itemize}
+
+\subsubsection{Constraints}
+
+\begin{itemize}
+    \item \textbf{Technology Stack:} Flask backend, HTML/CSS frontend, file-based storage, UML 2.5 notation.
+    \item \textbf{Operating Environment:} Chrome and Firefox browsers, cloud server hosting.
+    \item \textbf{External Dependencies:} Email gateway API for notifications.
+\end{itemize}
+
+\newpage
+
+% =======================
+% SECTION 3: ARCHITECTURAL DESIGN
+% =======================
+\section{Architectural Design}
+
+\subsection{System Architecture Diagram}
+The Clinexa Medical System follows a three-tier monolithic architecture. Figure~\ref{fig:architecture} illustrates the overall system architecture.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.85\textwidth]{figures/arch1.png}}
+    \caption{Clinexa System Architecture - Three-Tier Monolithic Design}
+    \label{fig:architecture}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.85\textwidth]{figures/arch2.jpg}}
+    \caption{Detailed Architecture View - Component breakdown}
+    \label{fig:architecture-detail}
+\end{figure}
+
+The architecture consists of:
+
+\begin{enumerate}
+    \item \textbf{Presentation Layer:} Web Browser Interface (HTML/CSS)
+    \item \textbf{Business Logic Layer:} Flask Web Application Server
+    \item \textbf{Data Access Layer:} File system management
+\end{enumerate}
+
+\subsection{Discussion of Architectural Style and Components}
+
+\subsubsection{Monolithic Architecture}
+Clinexa adopts a monolithic architectural style where all components are integrated into a single application.
+
+\textbf{Rationale:}
+\begin{itemize}
+    \item Well-defined project scope manageable as a single application
+    \item Simplified development for student team
+    \item Flask optimized for monolithic applications
+    \item Straightforward deployment to cloud server
+\end{itemize}
+
+\subsection{Technology Stack and Tools}
+
+\subsubsection{Backend Technologies}
+\begin{itemize}
+    \item \textbf{Programming Language:} Python 3.x
+    \item \textbf{Web Framework:} Flask 2.x with Jinja2 templates
+\end{itemize}
+
+\subsubsection{Frontend Technologies}
+\begin{itemize}
+    \item \textbf{Markup Language:} HTML5
+    \item \textbf{Styling:} CSS3
+\end{itemize}
+
+\subsubsection{Data Storage}
+\begin{itemize}
+    \item \textbf{Storage Mechanism:} File-based text storage with pipe-separated values (PSV)
+\end{itemize}
+
+\subsubsection{External Services}
+\begin{itemize}
+    \item \textbf{Email Service:} SMTP-compatible email service for appointment notifications
+    \item \textbf{Hosting:} Cloud hosting platform (Heroku, PythonAnywhere)
+\end{itemize}
+
+\newpage
+
+% =======================
+% SECTION 4: DETAILED DESIGN
+% =======================
+\section{Detailed Design}
+
+\subsection{Model–View–Controller (MVC) Design Pattern}
+
+\subsubsection{Description of MVC Pattern}
+The Model-View-Controller (MVC) is an architectural design pattern that separates an application into three interconnected components.
+
+\textbf{Components:}
+\begin{itemize}
+    \item \textbf{Model:} Data layer and business logic
+    \item \textbf{View:} User interface presentation
+    \item \textbf{Controller:} Request handling and flow control
+\end{itemize}
+
+\textbf{Why MVC Was Chosen:}
+\begin{enumerate}
+    \item Separation of concerns for maintainability
+    \item Enables parallel development
+    \item Improves testability
+    \item Framework compatibility with Flask
+    \item Supports future scalability
+\end{enumerate}
+
+\subsubsection{Mapping of Project Components to MVC}
+Table~\ref{tab:mvc-mapping} provides a comprehensive mapping of Clinexa components to the MVC pattern.
+
+\begin{table}[H]
+\centering
+\caption{Mapping of Clinexa Components to MVC Pattern}
+\label{tab:mvc-mapping}
+\small
+\begin{tabular}{|p{2.5cm}|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Component} & \textbf{Model} & \textbf{View} & \textbf{Controller} \\
+\hline
+User Management & 
+User class (userID, username, password, name, email, phone, role) with login(), logout(), updateProfile() methods & 
+UserLoginView, UserProfileView with forms & 
+UserController handles login, logout, profile updates, sessions \\
+\hline
+Authentication & 
+Authentication class tracking login attempts, blocking status & 
+AuthenticationView with login page, error messages & 
+AuthController validates credentials, manages blocking \\
+\hline
+Patient Management & 
+Patient class with medical history, demographics & 
+PatientDashboardView, PatientProfileView & 
+PatientController manages registration, appointments \\
+\hline
+Doctor Management & 
+Doctor class with specialization, availability & 
+DoctorDashboardView, DoctorScheduleView & 
+DoctorController manages schedules, records access \\
+\hline
+Appointment Management & 
+Appointment class (date, time, status, IDs) & 
+AppointmentBookingView, AppointmentListView & 
+AppointmentController processes bookings, checks availability \\
+\hline
+Medical Records & 
+AppointmentRecord class (diagnoses, prescriptions) & 
+MedicalRecordView with forms & 
+RecordController creates/updates records \\
+\hline
+Notifications & 
+Notification class (message, recipient, status) & 
+NotificationView with lists & 
+NotificationController sends reminders \\
+\hline
+Report Generation & 
+Report class (type, parameters, data) & 
+ReportView with filters, charts & 
+ReportController processes requests, formats reports \\
+\hline
+Search & 
+Search class (query, filters, results) & 
+SearchView with search bar & 
+SearchController processes queries, applies filters \\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\subsubsection{Interaction Between Components}
+Figure~\ref{fig:mvc-interaction} illustrates how Model, View, and Controller interact during typical operations.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=1.0\textwidth]{figures/mvc.jpg}}
+    \caption{MVC Component Interaction Flow}
+    \label{fig:mvc-interaction}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=1.0\textwidth]{figures/mvc.jpg}}
+    \caption{MVC Component Interaction Flow (continued)}
+\end{figure}
+
+\subsection{UML Diagrams}
+
+\subsubsection{Class Diagram}
+Figure~\ref{fig:class-diagram} presents the complete class structure of the Clinexa system, showing all major classes, their attributes, methods, and relationships.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.95\textwidth]{figures/class_d.png}}
+    \caption{Class Diagram - Complete class structure showing User, Patient, Doctor, Appointment, MedicalRecord, and supporting classes with their attributes, methods, and associations}
+    \label{fig:class-diagram}
+\end{figure}
+
+\subsubsection{Sequence Diagrams}
+Sequence diagrams illustrate the interaction flow over time for key operations.
+
+\textbf{1. User Login Sequence}
+
+Figure~\ref{fig:seq-login} demonstrates the authentication process including credential validation, failed attempt tracking, and session management.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.9\textwidth]{figures/seq_1.png}}
+    \caption{Login Sequence Diagram}
+    \label{fig:seq-login}
+\end{figure}
+
+\textbf{2. Appointment Booking Sequence}
+
+Figure~\ref{fig:seq-appointment} shows the complete appointment booking workflow from availability checking to notification delivery.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.9\textwidth]{figures/seq_2.png}}
+    \caption{Appointment Booking Sequence Diagram}
+    \label{fig:seq-appointment}
+\end{figure}
+
+\textbf{3. Medical Record Management Sequence}
+
+Figure~\ref{fig:seq-medical-record} illustrates how doctors create medical records after consultations.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.9\textwidth]{figures/seq_3.png}}
+    \caption{Medical Record Management Sequence Diagram}
+    \label{fig:seq-medical-record}
+\end{figure}
+
+\textbf{4. Report Generation Sequence}
+
+Figure~\ref{fig:seq-report} depicts the report generation process with data collection and formatting.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.9\textwidth]{figures/seq_4.png}}
+    \caption{Report Generation Sequence Diagram}
+    \label{fig:seq-report}
+\end{figure}
+
+\textbf{5. Search and Filter Sequence}
+
+Figure~\ref{fig:seq-search} shows the search functionality with filtering and pagination.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.9\textwidth]{figures/seq_5.png}}
+    \caption{Search and Filter Sequence Diagram}
+    \label{fig:seq-search}
+\end{figure}
+
+\newpage
+
+\subsection{UI/UX Design}
+
+\subsubsection{Wireframes / Mockups}
+The following wireframes illustrate the layout and functionality of major user interfaces.
+
+\textbf{1. Login Page}
+
+Figure~\ref{fig:ui-login} presents the authentication interface with credential input and error handling.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.75\textwidth]{figures/mockup-1.png}}
+    \caption{Login Page Wireframe}
+    \label{fig:ui-login}
+\end{figure}
+
+\textbf{2. Patient Dashboard}
+
+Figure~\ref{fig:ui-patient-dashboard} shows the patient's main interface with appointments and quick actions.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.85\textwidth]{figures/mockup-2.png}}
+    \caption{Patient Dashboard Wireframe}
+    \label{fig:ui-patient-dashboard}
+\end{figure}
+
+\textbf{3. Doctor Dashboard}
+
+Figure~\ref{fig:ui-doctor-dashboard} displays the doctor's schedule and patient management interface.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.85\textwidth]{figures/mockup-3.png}}
+    \caption{Doctor Dashboard Wireframe}
+    \label{fig:ui-doctor-dashboard}
+\end{figure}
+
+\textbf{4. Appointment Booking Page}
+
+Figure~\ref{fig:ui-booking} illustrates the appointment booking workflow with doctor search and availability selection.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.85\textwidth]{figures/mockup-4.png}}
+    \caption{Appointment Booking Wireframe}
+    \label{fig:ui-booking}
+\end{figure}
+
+\textbf{5. Medical Record View}
+
+Figure~\ref{fig:ui-medical-record} shows the comprehensive medical history display.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.85\textwidth]{figures/mockup-5.png}}
+    \caption{Medical Record Wireframe}
+    \label{fig:ui-medical-record}
+\end{figure}
+
+\textbf{6. Profile Management Page}
+
+Figure~\ref{fig:ui-profile} presents the user profile management interface.
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.8\textwidth]{figures/mockup-6.png}}
+    \caption{Profile Management Wireframe}
+    \label{fig:ui-profile}
+\end{figure}
+
+\newpage
+
+\subsection{Data Design}
+
+\subsubsection{File Structure / Data Storage Model}
+
+The Clinexa system uses nine text files for data storage in the \texttt{clinexa\_data/} directory:
+
+\begin{verbatim}
+clinexa_data/
+├── users.txt
+├── patients.txt
+├── doctors.txt
+├── appointments.txt
+├── medical_records.txt
+├── notifications.txt
+├── authentication_logs.txt
+├── feedback.txt
+└── reports.txt
+\end{verbatim}
+
+\textbf{Data Format Conventions:}
+\begin{itemize}
+    \item \textbf{Primary Separator:} Pipe (|) separates fields
+    \item \textbf{List Separator:} Semicolon (;) for multiple items
+    \item \textbf{Key-Value Separator:} Tilde (\textasciitilde) for structured data
+    \item \textbf{Encoding:} UTF-8
+    \item \textbf{Null Values:} "NULL" or "None"
+\end{itemize}
+
+\subsubsection{File Schemas}
+
+\textbf{1. users.txt}
+
+\begin{lstlisting}
+userID|username|password|name|email|phone|role|created_date
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|ahmed_ragab|hashed_pass123|Ahmed Ragab|ahmed@example.com|+201234567890|patient|2025-01-15
+\end{lstlisting}
+
+\textbf{2. patients.txt}
+
+\begin{lstlisting}
+patientID|userID|gender|date_of_birth|blood_type|allergies|medical_history|emergency_contact
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|1|male|1995-05-20|O+|Penicillin;Peanuts|Diabetes Type 2;Hypertension|Fatma Ragab:+201234567891
+\end{lstlisting}
+
+\textbf{3. doctors.txt}
+
+\begin{lstlisting}
+doctorID|userID|specialization|license_number|consultation_fee|availability_days|availability_hours|years_experience
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|2|Cardiology|LIC123456|500|Sunday;Monday;Wednesday;Thursday|09:00-17:00|15
+\end{lstlisting}
+
+\textbf{4. appointments.txt}
+
+\begin{lstlisting}
+appointmentID|patientID|doctorID|appointment_date|appointment_time|status|reason|meeting_link|created_date|updated_date
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|1|1|2025-02-15|10:00|confirmed|Regular checkup|https://meet.clinexa.com/apt001|2025-01-20|2025-01-21
+\end{lstlisting}
+
+\textbf{5. medical\_records.txt}
+
+\begin{lstlisting}
+recordID|appointmentID|patientID|doctorID|diagnosis|prescription|notes|vital_signs|record_date|record_time
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|1|1|1|Type 2 Diabetes Monitoring|Metformin 500mg~2 times daily;Insulin~10 units|Patient improving|BP~120/80;HR~72;Temp~36.8|2025-02-15|10:30
+\end{lstlisting}
+
+\textbf{6. notifications.txt}
+
+\begin{lstlisting}
+notificationID|recipientID|recipient_type|notification_type|message|sent_date|sent_time|status|channel
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|1|patient|appointment_reminder|Your appointment tomorrow at 10:00 AM|2025-02-14|09:00|sent|email
+\end{lstlisting}
+
+\textbf{7. authentication\_logs.txt}
+
+\begin{lstlisting}
+logID|userID|username|attempt_date|attempt_time|status|ip_address|failed_attempts_count|is_blocked|block_until
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|1|ahmed_ragab|2025-01-20|14:30:25|success|192.168.1.100|0|false|NULL
+\end{lstlisting}
+
+\textbf{8. feedback.txt}
+
+\begin{lstlisting}
+feedbackID|patientID|doctorID|appointmentID|rating|comment|feedback_date|feedback_time|status
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|1|1|1|5|Dr. Smith was very professional.|2025-02-15|15:45|submitted
+\end{lstlisting}
+
+\textbf{9. reports.txt}
+
+\begin{lstlisting}
+reportID|report_type|generated_by|parameters|generated_date|generated_time|file_path
+\end{lstlisting}
+
+Example:
+\begin{lstlisting}
+1|daily_appointments|2|date~2025-02-15;doctor~all|2025-02-15|17:00|/reports/daily_2025-02-15.pdf
+\end{lstlisting}
+
+\newpage
+
+% =======================
+% SECTION 5: CONCLUSION
+% =======================
+\section{Conclusion}
+
+\subsection{Summary of Design Decisions}
+
+This Software Design Document has presented a comprehensive design for the Clinexa Medical System. Key design decisions include:
+
+\begin{itemize}
+    \item Three-tier monolithic architecture with clear layer separation
+    \item MVC design pattern for all nine system components
+    \item File-based storage with structured text files
+    \item Role-specific user interfaces with intuitive navigation
+    \item Robust security through password hashing and access control
+\end{itemize}
+
+\subsection{Design Phase Outputs}
+
+The design phase has produced:
+\begin{itemize}
+    \item Architectural diagrams showing three-tier design
+    \item Complete MVC component mapping
+    \item Class diagram with all system classes
+    \item Five sequence diagrams for key operations
+    \item Six UI wireframes for major interfaces
+    \item Complete file schemas for all nine data files
+\end{itemize}
+
+\subsection{Alignment with Requirements}
+
+The design fully addresses all functional requirements (authentication, appointments, medical records, notifications, reports, search, feedback) and non-functional requirements (usability, reliability, security, maintainability, compatibility).
+
+\subsection{Next Steps}
+
+\begin{enumerate}
+    \item Review and approval from stakeholders
+    \item Development environment setup
+    \item Implementation planning with task assignment
+    \item Iterative development starting with core functionality
+    \item Comprehensive testing throughout implementation
+\end{enumerate}
+
+\end{document}
