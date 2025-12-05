@@ -1,0 +1,1081 @@
+Zewail City of Science, Technology and Innovation
+University of Science and Technology
+School of Computational Sciences and Artificial Intelligence
+CSAI 203 - Fall 2025
+Introduction to Software Engineering
+
+Software Requirements Specification
+(SRS)
+Project: Clinexa Medical System
+Version 1.0
+Team Number: 26
+Email: s-ahmed.ragab@zewailcity.edu.eg
+
+Team Members
+Name
+
+ID
+
+Email
+
+Ahmed Ragab
+
+202400437
+
+s-ahmed.ragab@zewailcity.edu.eg
+
+Mosab Kamal
+
+202402297
+
+s-mosab.gabal@zewailcity.edu.eg
+
+Mohamed Maher
+
+202301798
+
+s-mohammed.kafagy@zewailcity.edu.eg
+
+Abdelrhman Khaled
+
+202400161
+
+s-abdelrhman.abdelhamid@zewailcity.edu.eg
+
+Clinexa Medical System - SRS
+
+Fall 2025
+
+Contents
+1 Introduction
+
+3
+
+1.1
+
+Purpose . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+
+1.2
+
+Scope
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+
+1.3
+
+Definitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+
+1.4
+
+References . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+1.5
+
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+2 System Overview
+
+4
+
+2.1
+
+Platform Perspective . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+2.2
+
+Application Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+2.3
+
+User Classes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+2.4
+
+Operating Environment
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+2.5
+
+Constraints . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+2.6
+
+User Documentation . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+2.7
+
+Assumptions and Dependencies . . . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+3 Specific Requirements
+3.1
+
+3.2
+
+6
+
+Functional Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+3.1.1
+
+FR1: User Login . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+3.1.2
+
+FR2: Edit Profile . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+3.1.3
+
+FR3: Add / Remove Patient . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+3.1.4
+
+FR4: Schedule Appointment . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+3.1.5
+
+FR5: Manage Appointments . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+3.1.6
+
+FR6: Search . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+3.1.7
+
+FR7: Generate Reports . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+3.1.8
+
+FR8: Send Notifications . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+3.1.9
+
+FR9: Manage Medical Records . . . . . . . . . . . . . . . . . . .
+
+8
+
+3.1.10 FR10: Feedback and Rating System . . . . . . . . . . . . . . . . .
+
+8
+
+Use Case Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8
+
+3.2.1
+
+8
+
+Use Case Diagram . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1
+
+Clinexa Medical System - SRS
+3.2.2
+3.3
+
+3.4
+
+3.5
+
+Fall 2025
+
+Use Case Descriptions . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+Domain Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+3.3.1
+
+Conceptual Class Diagram . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+3.3.2
+
+Class Descriptions . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+Non-Functional Requirements . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+3.4.1
+
+Reliability and Availability Requirements . . . . . . . . . . . . . .
+
+12
+
+3.4.2
+
+Maintainability . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+External Interface Requirements . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+
+3.5.1
+
+User Interface . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+
+3.5.2
+
+Hardware Interface . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+
+3.5.3
+
+Software Interface . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+
+3.5.4
+
+Communication Interface . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+
+4 Appendices
+
+14
+
+4.1
+
+Appendix A: Data Dictionary . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+4.2
+
+Appendix B: Glossary . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+2
+
+Clinexa Medical System - SRS
+
+1
+
+Introduction
+
+1.1
+
+Purpose
+
+Fall 2025
+
+This Software Requirements Specification (SRS) document defines the functional and
+non-functional requirements for Clinexa, a smart healthcare platform that facilitates
+communication and management between doctors and patients. This document provides a detailed description of the system’s features, user interactions, and operational
+constraints. It serves as a reference for the development team, stakeholders, and testers
+throughout the software development life cycle
+
+1.2
+
+Scope
+
+Clinexa is a web-based healthcare management system designed to improve the efficiency
+and accessibility of medical services. The platform allows patients to book appointments,
+communicate with doctors, and access their medical records. Doctors can also manage
+patient data and schedule consultations.
+The system aims to:
+• Enhance communication between doctors and patients.
+• Simplify appointment scheduling and medical record management.
+• Reduce administrative overhead in healthcare services.
+
+1.3
+
+Definitions
+
+• SRS: Software Requirements Specification.
+• UI: User Interface.
+• UX: User Experience.
+• CMS: Clinexa Management System.
+• Clinexa: The proposed smart healthcare management system.
+• Patient: The end user who uses the system to book appointments and access
+healthcare services.
+3
+
+Clinexa Medical System - SRS
+
+Fall 2025
+
+• Doctor: The medical professional who provides consultations and manages patient
+records within the system.
+
+1.4
+
+References
+
+1. Course Project Guidelines – CSAI 203 Introduction to Software Engineering, Fall
+2025.
+2. Project Repository Documentation (Clinexa - GitHub).
+
+1.5
+
+Overview
+
+This document outlines the purpose, scope, and functionality of the Clinexa system.
+Subsequent sections will describe:
+• System features and user requirements.
+• Functional and non-functional requirements.
+The goal is to ensure that all stakeholders have a clear, shared understanding of what
+the system will deliver.
+
+2
+
+System Overview
+
+2.1
+
+Platform Perspective
+
+The CMS replaces manual paper-based systems with a digital solution (web application)
+to reduce errors, save time, and improve coordination between doctors and patients.
+
+2.2
+
+Application Functions
+
+• User login and role-based access
+• Manage doctor and patient profiles
+• Schedule, reschedule, cancel appointments
+• Search patients and appointments
+
+4
+
+Clinexa Medical System - SRS
+
+Fall 2025
+
+• Generate operational reports
+• Send automated notifications
+• Link patients to their doctors
+
+2.3
+
+User Classes
+
+Different types of users who will interact with the system:
+• Registered Users: Can browse time slots, book anyone.
+• Doctors: Can specify time slots, cancel appointments, and show patient medical
+history
+
+2.4
+
+Operating Environment
+
+The system will operate in the following environments:
+• Client-side: Runs in web browsers such as Chrome and Firefox.
+• Server Side: Hosted on a cloud server running Flask.
+• File system: Storing and reading data from the file.
+
+2.5
+
+Constraints
+
+• Must use UML 2.5 for diagrams.
+• Backend: Flask.
+• Frontend: (HTML and CSS).
+• Diagrams: draw.io or Lucidchart.
+
+2.6
+
+User Documentation
+
+• User Manual (PDF)
+• Online Help within the system
+
+5
+
+Clinexa Medical System - SRS
+
+2.7
+
+Fall 2025
+
+Assumptions and Dependencies
+
+• Internet connection available
+• Users have basic computer skills
+• Email/SMS gateway API available
+
+3
+
+Specific Requirements
+
+3.1
+
+Functional Requirements
+
+3.1.1
+
+FR1: User Login
+
+Scenarios:
+• Valid credentials → access dashboard (all features)
+• Invalid → show error (3 attempts → lock 5 mins)
+• Forgotten password → reset via email/receptionist
+3.1.2
+
+FR2: Edit Profile
+
+Scenarios:
+• Doctor updates availability hours
+• Receptionist updates contact info
+3.1.3
+
+FR3: Add / Remove Patient
+
+Scenarios:
+• Add a patient with a medical history
+• Remove patient (archive, not delete from DB)
+
+6
+
+Clinexa Medical System - SRS
+
+3.1.4
+
+Fall 2025
+
+FR4: Schedule Appointment
+
+Scenarios:
+• Check doctor availability
+• Prevent double-booking
+• Cancel the booked appointment if the patient wants
+3.1.5
+
+FR5: Manage Appointments
+
+Scenarios:
+• The doctor views today’s list
+• Patient cancels 24h before
+3.1.6
+
+FR6: Search
+
+Scenarios:
+• Partial name match
+• Search appointments by date/doctor
+3.1.7
+
+FR7: Generate Reports
+
+Scenarios:
+• Daily appointments
+• Patient visit history
+• Doctor workload
+3.1.8
+
+FR8: Send Notifications
+
+Scenarios:
+• 24h before appointment → SMS/Email
+• Appointment confirmed → both parties
+7
+
+Clinexa Medical System - SRS
+
+3.1.9
+
+Fall 2025
+
+FR9: Manage Medical Records
+
+Scenarios:
+• Add a new prescription after consultation.
+• View patient history before the new appointment.
+• Update diagnosis or notes.
+3.1.10
+
+FR10: Feedback and Rating System
+
+Scenarios:
+• The patient submits feedback after the completed session.
+• Admin reviews ratings for performance analysis.
+
+3.2
+
+Use Case Model
+
+3.2.1
+
+Use Case Diagram
+
+Figure 1: Use Case Diagram
+8
+
+Clinexa Medical System - SRS
+
+3.2.2
+
+Fall 2025
+
+Use Case Descriptions
+
+Use Case
+
+Actors
+
+Description
+
+Relationships
+
+Login
+
+Patient,
+
+Allows users to access
+
+extend Security
+
+Doctor
+
+the system securely.
+
+Patient
+
+Enables users to update
+
+extend
+
+their personal
+
+Profile Information
+
+Edit Profile
+
+information.
+Profile InformationPatient
+
+Displays user profile
+details.
+
+Notification
+
+Patient
+
+Sends alerts or updates
+
+extend Usability
+
+to users.
+System Scheduling Doctor
+
+Manages scheduling of
+
+include Notification
+
+appointments and
+availability.
+Appointment
+
+Patient
+
+Management
+
+Handles booking,
+
+extend Reports
+
+rescheduling, and
+
+include Login
+
+cancellation of
+appointments
+Reports
+
+Doctor
+
+Generates and views
+patient reports.
+
+Search
+
+Patient,
+
+Allows users to search
+
+Doctor
+
+for information or
+
+include Reports
+
+profiles.
+Add/Remove Patient
+Doctor
+
+Profile Linking
+
+Doctor
+
+Enables doctors to
+
+include
+
+manage patient records.
+
+Profile Linking
+
+Links patient profiles for
+shared access or
+referrals.
+
+Usability
+
+Patient,
+
+Enhances user
+
+Doctor
+
+experience and
+accessibility.
+9
+
+Clinexa Medical System - SRS
+
+Fall 2025
+
+Use Case
+
+Actors
+
+Description
+
+Security
+
+Patient,
+
+Ensures data protection
+
+Doctor
+
+and secure access.
+
+3.3
+
+Domain Model
+
+3.3.1
+
+Conceptual Class Diagram
+
+Relationships
+
+Figure 2: Conceptual Class Diagram
+3.3.2
+
+Class Descriptions
+
+10
+
+Clinexa Medical System - SRS
+
+Class name
+
+User
+
+Description
+
+Fall 2025
+
+Key Attributes
+
+Associations /
+
+(with Data type)
+
+Relationships
+
+Base class
+
+userID: int, username:
+
+Inherited by
+
+representing any
+
+string, password:
+
+Doctor and
+
+system user
+
+string, name: string,
+
+Patient; associated
+
+(doctor, patient,
+
+email: string, phone:
+
+with
+
+admin).
+
+string, role: string
+
+Authentication
+(login) and
+Registration (sign
+up).
+
+Authentication
+
+Handles user login
+
+login attempts: int,
+
+Associated with
+
+attempts and
+
+isBlocked: bool,
+
+User (1-to-1);
+
+authentication
+
+Authenticated: bool
+
+manages login
+
+state.
+
+control and
+validation.
+
+Registration
+
+Manages new user
+
+username: string,
+
+Linked to User (for
+
+registration and
+
+password: string,
+
+creating accounts);
+
+data collection.
+
+gender: string, email:
+
+used by Patient
+
+string, age: int,
+
+during sign-up
+
+country: string
+Patient
+
+Represents a
+
+patientID: int,
+
+Inherits from User;
+
+patient user with
+
+gender: string,
+
+associated with
+
+medical
+
+medicalHistory:
+
+Appointment,
+
+information
+
+string
+
+Appointment
+Record, and
+Registration
+
+11
+
+Clinexa Medical System - SRS
+
+Class name
+
+Doctor
+
+Description
+
+Fall 2025
+
+Key Attributes
+
+Associations /
+
+(with Data type)
+
+Relationships
+
+Represents a
+
+specialization: string,
+
+Inherits from User;
+
+doctor with
+
+availabilitySchedule:
+
+associated with
+
+specialization and
+
+list
+
+Appointment (for
+
+working hours
+
+booking) and
+Appointment
+Record (for
+viewing history).
+
+Appointment
+
+Represents a
+
+appointmentID: int,
+
+Linked to Patient
+
+booked
+
+patientID: int, date:
+
+and Doctor
+
+appointment
+
+date, time: time,
+
+(many-to-one
+
+between patient
+
+status: string, reason:
+
+each); connected to
+
+and doctor.
+
+string, meeting link:
+
+Appointment
+
+string
+
+Record.
+
+Appointments
+
+Stores consultation
+
+recordID: int,
+
+Linked to
+
+Record
+
+details and
+
+patientID: int,
+
+Appointment
+
+prescription data
+
+prescription: string,
+
+(composition) and
+
+date: string, time:
+
+Doctor (association
+
+string, reason: string
+
+for access).
+
+3.4
+
+Non-Functional Requirements
+
+3.4.1
+
+Reliability and Availability Requirements
+
+• The platform should maintain 99.9% uptime.
+• Recovery time after a system failure should be within 5 minutes.
+3.4.2
+
+Maintainability
+
+• The success rate of the maintenance will be 90%
+• The maintenance speed will be 95%.
+
+12
+
+Clinexa Medical System - SRS
+
+3.5
+
+External Interface Requirements
+
+3.5.1
+
+User Interface
+
+Fall 2025
+
+Clinexa will provide a responsive web-based interface accessible from any browser (Google
+Chrome, Firefox).
+The interface will include login pages, dashboards for doctors and patients, appointment scheduling screens, and show reports
+Patients will have access to booking and show reports, while doctors will have access
+to patient lists, schedules and reports.
+3.5.2
+
+Hardware Interface
+
+The system will run on standard computing devices, such as desktops, laptops, and
+tablets.
+No special hardware is required, except a device with a stable internet connection and
+web browser.
+3.5.3
+
+Software Interface
+
+The system will run on standard computing devices, such as desktops, laptops, and
+tablets.
+No special hardware is required, except a device with a stable internet connection and
+web browser.
+• Operating System: Any OS capable of running modern web browsers (Windows,
+macOS, Linux).
+• Backend Framework: Flask.
+• Frontend: HTML, CSS.
+• Database: File System
+3.5.4
+
+Communication Interface
+
+Clinexa will use HTTP/HTTPS protocols for client–server communication to ensure security and reliability.
+13
+
+Clinexa Medical System - SRS
+
+Fall 2025
+
+SMTP protocol will be used for email notifications.
+
+4
+
+Appendices
+
+4.1
+
+Appendix A: Data Dictionary
+
+• SRS: Software Requirements Specification.
+• UI: User Interface.
+• UX: User Experience.
+• CMS: Clinexa Management System.
+• Clinexa: The proposed smart healthcare management system.
+• Patient: The end user who uses the system to book appointments and access
+healthcare services.
+• Doctor: The medical professional who provides consultations and manages patient
+records within the system.
+
+4.2
+
+Appendix B: Glossary
+
+• Clinexa: The smart healthcare management system developed in this project
+• User: Any individual interacting with the system (Doctor, Patient, or Admin)
+• Doctor: A medical professional responsible for consultations and managing patients.
+• Patient: A registered user who books appointments and receives medical care
+• Appointment: A scheduled meeting between a doctor and a patient
+• Appointment Record: The record created after an appointment, containing diagnosis and prescription details
+• Authentication: The process of verifying user credentials (login validation)
+• Registration: The process of creating a new user account in the system
+14
+
+Clinexa Medical System - SRS
+
+Fall 2025
+
+• Notification: Automated messages (email or SMS) for reminders or confirmations
+• Report: A document or summary generated by the doctor or receptionist showing
+appointments or medical data.
+
+15
+
+
