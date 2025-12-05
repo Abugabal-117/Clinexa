@@ -1,10 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for,session, flash
-from controllers.user_controller import UserController
-from controllers.patient_controller import PatientController
-from controllers.doctor_controller import DoctorController
-from controllers.notification_controller import NotificationController
-from controllers.auth_utils import login_required, patient_required, refresh_session_user
-import secrets
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
