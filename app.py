@@ -3,7 +3,7 @@ from controllers.user_controller import UserController
 from controllers.patient_controller import PatientController
 from controllers.doctor_controller import DoctorController
 from controllers.notification_controller import NotificationController
-from auth_utils import login_required, patient_required, refresh_session_user
+from controllers.auth_utils import login_required, patient_required, refresh_session_user
 import secrets
 
 app = Flask(__name__)
