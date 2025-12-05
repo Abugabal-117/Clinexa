@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinic System - Welcome</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="home-page">
 
@@ -34,7 +34,7 @@
                 </div>
                 <h2>Patient</h2>
                 <p>Book appointments and manage your health information</p>
-                <a href="login.html" class="btn btn-green">Continue as Patient</a>
+                <a href="{{ url_for('login') }}" class="btn btn-green">Continue as Patient</a>
             </div>
         </div>
     </div>
