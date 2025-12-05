@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit My Profile</title>
-    <<<<<<< HEAD <<<<<<< HEAD <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <input type="text" value="John Doe">
+                        <input type="text" name="last_name" value="{{ user.last_name }}">
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                         </svg>
-                        <input type="email" value="s-mosab.gabal@zewailcity.edu.eg">
+                        <input type="email" name="email" value="{{ user.email }}">
                     </div>
                 </div>
 
