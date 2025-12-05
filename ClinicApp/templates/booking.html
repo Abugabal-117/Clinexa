@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="nav-container">
+        <a href="{{ url_for('doctor_profile') }}" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Doctor Profile
+        </a>
+    </div>
+
+    <div class="center-content">
+        <div class="content-card booking-container">
+            
+            <h1 style="margin-bottom: 5px;">Book an Appointment</h1>
+            <p style="color:#64748b; margin-bottom: 25px;">Select a day and time that works for you</p>
+
+            <div class="section-header">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Select Day
+            </div>
+
+            <div class="date-list">
+                <button class="date-option">
+                    <div class="day-info">
+                        <span class="day-name">Saturday</span>
+                        <span class="day-date">Dec 14, 2024</span>
+                    </div>
+                </button>
+
+                <button class="date-option">
+                    <div class="day-info">
+                        <span class="day-name">Sunday</span>
+                        <span class="day-date">Dec 15, 2024</span>
+                    </div>
+                </button>
+
+                <button class="date-option">
+                    <div class="day-info">
+                        <span class="day-name">Monday</span>
+                        <span class="day-date">Dec 16, 2024</span>
+                    </div>
+                </button>
+
+                <button class="date-option">
+                    <div class="day-info">
+                        <span class="day-name">Tuesday</span>
+                        <span class="day-date">Dec 17, 2024</span>
+                    </div>
+                </button>
+
+                <button class="date-option">
+                    <div class="day-info">
+                        <span class="day-name">Wednesday</span>
+                        <span class="day-date">Dec 18, 2024</span>
+                    </div>
+                </button>
+
+                <button class="date-option">
+                    <div class="day-info">
+                        <span class="day-name">Thursday</span>
+                        <span class="day-date">Dec 19, 2024</span>
+                    </div>
+                </button>
+
+                <button class="date-option unavailable">
+                    <div class="day-info">
+                        <span class="day-name">Friday</span>
+                        <span class="day-date">Dec 20, 2024</span>
+                    </div>
+                    <span class="status-badge">Not Available</span>
+                </button>
+            </div>
+
+            <div class="time-section show" style="display: block;">
+                <div class="section-header">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Available Times
+                </div>
+
+                <div class="time-grid">
+                    <button class="time-slot">09:00 AM</button>
+                    <button class="time-slot">10:00 AM</button>
+                    <button class="time-slot">11:00 AM</button>
+                    <button class="time-slot">01:00 PM</button>
+                    <button class="time-slot">02:00 PM</button>
+                    <button class="time-slot">03:00 PM</button>
+                    <button class="time-slot">04:00 PM</button>
+                    <button class="time-slot">05:00 PM</button>
+                    <button class="time-slot">06:00 PM</button>
+                </div>
+            </div>
+            
+            <a href="{{ url_for('appointments') }}" class="confirm-btn btn-blue" style="text-decoration: none; text-align: center; display: block; color: white;">
+                Confirm Booking
+            </a>
+        </div>
+    </div>
+</body>
+</html>
