@@ -1,0 +1,2 @@
+appointment_id,patient_id,doctor_id,appointment_date,appointment_time,status,reason,meeting_link,created_date,updated_date
+cdbdb861,002,003,2025-02-15,10:00,confirmed,Regular checkup,,2025-12-04T10:14:15.480586,2025-12-04T10:14:15.480590
