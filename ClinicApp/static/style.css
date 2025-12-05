@@ -1,4 +1,3 @@
-/* --- Global Styles & Reset --- */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,7 @@
 }
 
 body {
-    background-color: #f8fafc; /* Default background */
+    background-color: #f8fafc; 
     min-height: 100vh;
     color: #334155;
     display: flex;
@@ -20,7 +19,6 @@ a {
     transition: all 0.2s;
 }
 
-/* --- Utility Classes --- */
 .center-content {
     display: flex;
     align-items: center;
@@ -37,7 +35,6 @@ a {
 
 .hidden { display: none; }
 
-/* --- Navigation / Back Links --- */
 .nav-container, .back-link-wrapper {
     width: 100%;
     max-width: 800px;
@@ -55,9 +52,7 @@ a {
 }
 .back-link:hover { color: #1e293b; }
 
-/* =========================================
-   PAGE: HOME (index.html)
-   ========================================= */
+
 body.home-page {
     background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.7)), 
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80');
@@ -109,9 +104,7 @@ body.home-page {
 .btn-green { background-color: #16a34a; }
 .btn:hover { opacity: 0.9; }
 
-/* =========================================
-   PAGE: AUTH (login.html, signup.html)
-   ========================================= */
+
 .auth-card {
     background-color: white;
     width: 100%; max-width: 480px;
@@ -145,9 +138,7 @@ body.home-page {
 .link-text { font-size: 0.95rem; color: #64748b; margin-top: 20px; }
 .link-text a { color: #16a34a; font-weight: 600; }
 
-/* =========================================
-   PAGE: DASHBOARD (dashboard.html)
-   ========================================= */
+
 .dash-header {
     background-color: white; height: 70px;
     display: flex; align-items: center; justify-content: space-between;
@@ -179,9 +170,7 @@ body.home-page {
 .dash-card h3 { color: #1e293b; font-size: 1.25rem; margin-bottom: 15px; }
 .dash-card p { color: #64748b; font-size: 0.95rem; }
 
-/* =========================================
-   PAGE: EDIT PROFILE (edit-profile.html)
-   ========================================= */
+
 .divider-text {
     display: flex; align-items: center; color: #94a3b8; font-size: 0.9rem; margin: 30px 0;
 }
@@ -195,9 +184,7 @@ body.home-page {
 .btn-gray { background-color: #e2e8f0; color: #475569; }
 .btn-gray:hover { background-color: #cbd5e1; }
 
-/* =========================================
-   PAGE: DOCTOR PROFILE (doctor-profile.html)
-   ========================================= */
+
 .profile-container { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 24px; margin: 0 auto; }
 
 .content-card {
@@ -233,14 +220,12 @@ body.home-page {
     cursor: pointer; flex: 1; transition: background-color 0.2s; text-align: center;
 }
 .btn-outline-blue:hover { background-color: #eff6ff; }
-.doc-profile-card .btn-blue { flex: 1; } /* Make buttons equal width in profile */
+.doc-profile-card .btn-blue { flex: 1; }
 
-/* =========================================
-   PAGE: BOOKING (booking.html)
-   ========================================= */
+
 .booking-container { width: 100%; max-width: 700px; padding: 30px; }
 
-/* Day List */
+
 .section-header {
     font-size: 1rem; color: #475569; font-weight: 600; margin-bottom: 15px;
     display: flex; align-items: center; gap: 8px;
@@ -277,7 +262,7 @@ body.home-page {
     border-radius: 6px; background-color: #fee2e2; color: #ef4444;
 }
 
-/* Time Section */
+
 .time-section {
     border-top: 1px solid #e2e8f0; padding-top: 25px;
     display: none; animation: slideDown 0.3s ease-out;
@@ -308,9 +293,7 @@ body.home-page {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* =========================================
-   PAGE: APPOINTMENTS (appointments.html)
-   ========================================= */
+
 .appt-header { 
     background: #f0fdf4; padding: 20px 30px; border-bottom: 1px solid #dcfce7; 
     color: #15803d; font-weight: 600; display: flex; align-items: center; gap: 10px; 
@@ -320,9 +303,7 @@ body.home-page {
 .doc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; font-weight: 600; color: #1e293b; }
 .time-row { display: flex; gap: 20px; margin-left: 30px; color: #475569; font-size: 0.95rem; margin-top: 5px; }
 
-/* =========================================
-   PAGE: RATING (rating.html)
-   ========================================= */
+
 .rating-page-wrapper {
     background-color: #f9fafb; min-height: 100vh; padding: 24px;
 }
@@ -342,7 +323,7 @@ body.home-page {
 .rating-subtitle { color: #6b7280; font-size: 16px; }
 .text-center { text-align: center; margin-bottom: 32px; }
 
-/* Stars Logic */
+
 .rating-stars-wrapper { display: flex; flex-direction: column; align-items: center; margin-bottom: 32px; }
 .stars-label { color: #4b5563; margin-bottom: 12px; font-size: 16px; }
 .stars-container { display: flex; flex-direction: row-reverse; gap: 8px; }
@@ -355,7 +336,7 @@ body.home-page {
 .stars-container label:hover,
 .stars-container label:hover ~ label { color: #facc15; }
 
-/* Inputs & Actions */
+
 .rating-input-group { margin-bottom: 32px; }
 .input-label { display: block; font-weight: 600; color: #374151; margin-bottom: 8px; }
 .feedback-textarea {
@@ -380,7 +361,7 @@ body.home-page {
 }
 .btn-submit:hover { background-color: #15803d; }
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 768px) {
     .cards-container, .dash-grid, .doc-header-row, .exp-grid, .action-buttons-row { flex-direction: column; }
     .role-card, .dash-card, .auth-card { width: 100%; }
@@ -394,11 +375,6 @@ body.home-page {
     .time-grid { grid-template-columns: repeat(2, 1fr); }
     .doc-header-row { align-items: center; text-align: center; }
 }
-
-
-/* =========================================
-   PAGE: APPOINTMENTS RE-DESIGN
-   ========================================= */
 
 .page-header-text {
     text-align: center;
@@ -423,7 +399,7 @@ body.home-page {
     margin-bottom: 15px;
 }
 
-/* Base Card Style */
+
 .appt-card {
     background: white;
     border-radius: 12px;
@@ -434,7 +410,7 @@ body.home-page {
     border: 1px solid #e2e8f0;
 }
 
-/* Upcoming Style (Green Theme) */
+
 .appt-card.upcoming {
     background-color: #f0fdf4; 
     border: 1px solid #86efac;
@@ -447,7 +423,6 @@ body.home-page {
     box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1);
 }
 
-/* Past Style (Gray Theme) */
 .appt-card.past {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
@@ -460,7 +435,6 @@ body.home-page {
     border: 2px solid #94a3b8;
 }
 
-/* Card Content Layout */
 .appt-main-info {
     display: flex;
     align-items: center;
@@ -496,7 +470,6 @@ body.home-page {
     gap: 6px;
 }
 
-/* Actions Panel */
 .actions-card {
     width: 100%;
     max-width: 800px;
@@ -538,13 +511,13 @@ body.home-page {
 }
 
 .btn-action.reschedule {
-    background-color: #16a34a; /* Green */
+    background-color: #16a34a; 
     color: white;
 }
 .btn-action.reschedule:hover { background-color: #15803d; }
 
 .btn-action.cancel {
-    background-color: #ef4444; /* Red */
+    background-color: #ef4444; 
     color: white;
 }
 .btn-action.cancel:hover { background-color: #dc2626; }
