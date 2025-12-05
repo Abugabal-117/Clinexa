@@ -13,8 +13,11 @@ from repositories.repository_factory import RepositoryFactory
 def test_user_registration():
     print("=== Testing User Registration ===")
     
+    import uuid
+    unique_id = str(uuid.uuid4())[:8]
+    
     result = UserController.register(
-        email='patient1@example.com',
+        email=f'patient_{unique_id}@example.com',
         password='password123',
         first_name='Alice',
         last_name='Smith',
@@ -24,7 +27,7 @@ def test_user_registration():
     print(f"Patient Registration: {result['success']} - {result.get('user', result.get('message'))}")
     
     result = UserController.register(
-        email='doctor1@example.com',
+        email=f'doctor_{unique_id}@example.com',
         password='docpass123',
         first_name='Dr. John',
         last_name='Doe',

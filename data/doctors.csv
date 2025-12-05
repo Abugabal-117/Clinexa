@@ -1,5 +1,7 @@
-user_id,email,password_hash,first_name,last_name,created_at,is_active,specialization,license_number,patients,appointments
-003,doctor@example.com,hashed_pass,Dr. Mike,Johnson,2025-12-04T10:05:44.047102,True,Cardiology,LIC123,[],[]
-87b4f241,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,2025-12-04T10:12:58.789648,True,Cardiology,LIC12345,[],[]
-c6e5856a,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,2025-12-04T10:14:15.477155,True,Cardiology,LIC12345,[],[]
-64128e16,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,2025-12-04T10:14:34.861381,True,Cardiology,LIC12345,[],[]
+user_id,email,password_hash,first_name,last_name,role,created_at,is_active,specialization,license_number,patients,appointments
+003,doctor@example.com,hashed_pass,Dr. Mike,Johnson,,2025-12-04T10:05:44.047102,True,Cardiology,LIC123,[],[]
+87b4f241,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,,2025-12-04T10:12:58.789648,True,Cardiology,LIC12345,[],[]
+c6e5856a,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,,2025-12-04T10:14:15.477155,True,Cardiology,LIC12345,[],[]
+64128e16,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,,2025-12-04T10:14:34.861381,True,Cardiology,LIC12345,[],[]
+da8fb3d8,doctor1@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,,2025-12-05T23:19:33.697689,True,Cardiology,LIC12345,[],[]
+5b045f73,doctor_3f7944bc@example.com,467987bc8e907f7a4f4cd592505127c55e10065909c4bc518b55b51966385fbb,Dr. John,Doe,doctor,2025-12-05T23:34:59.588937,True,Cardiology,LIC12345,[],[]

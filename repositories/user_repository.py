@@ -22,7 +22,7 @@ class UserRepository(BaseRepository):
         self._initialized = True
     
     def get_fieldnames(self):
-        return ['user_id', 'email', 'password_hash', 'first_name', 'last_name', 'created_at', 'is_active']
+        return ['user_id', 'email', 'password_hash', 'first_name', 'last_name', 'role', 'created_at', 'is_active']
     
     def to_model(self, data):
         return User.from_dict(data)

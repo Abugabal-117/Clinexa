@@ -6,7 +6,7 @@ class Patient(User):
     def __init__(self, user_id, email, password_hash, first_name, last_name, 
                  date_of_birth=None, medical_history=None, appointments=None, **kwargs):
         super().__init__(user_id, email, password_hash, first_name, last_name, 
-                        kwargs.get('created_at'), kwargs.get('is_active', True))
+                        role='patient', created_at=kwargs.get('created_at'), is_active=kwargs.get('is_active', True))
         self.date_of_birth = date_of_birth
         self.medical_history = medical_history or []
         self.appointments = appointments or []

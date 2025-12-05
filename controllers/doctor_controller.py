@@ -220,3 +220,30 @@ class DoctorController:
         }
         
         return {'success': True, 'report': report_data}
+
+    @staticmethod
+    def get_feedback(doctor_id):
+        feedback_repo = RepositoryFactory.get_feedback_repository()
+        feedback = feedback_repo.find_by_doctor(doctor_id)
+        return {'success': True, 'feedback': feedback}
+
+    @staticmethod
+    def cancel_appointment(appointment_id):
+        appointment_repo = RepositoryFactory.get_appointment_repository()
+        appointment = appointment_repo.get_by_id(appointment_id)
+        
+        if not appointment:
+            return {'success': False, 'message': 'Appointment not found'}
+        
+        appointment.status = 'cancelled'
+        appointment.updated_date = datetime.now()
+        appointment_repo.save(appointment)
+        
+        # Notify patient
+        from controllers.notification_controller import NotificationController
+        NotificationController.send_notification(
+            recipient_id=appointment.patient_id,
+            message=f"Your appointment on {appointment.appointment_date} has been cancelled by Dr.{appointment.doctor_id}" # Ideally get name
+        )
+        
+        return {'success': True, 'message': 'Appointment cancelled'}

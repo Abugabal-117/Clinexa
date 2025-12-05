@@ -6,13 +6,21 @@ from datetime import datetime
 
 
 class UserController:    
+    _login_attempts = {} # Prototype in-memory storage for login attempts {email: {'count': 0, 'lock_until': timestamp}}
+
     @staticmethod
     def login(email, password):
+        from datetime import datetime, timedelta
+        
+        # Check lock
+        if email in UserController._login_attempts:
+            attempt_data = UserController._login_attempts[email]
+            if attempt_data.get('lock_until') and datetime.now() < attempt_data['lock_until']:
+                return {'success': False, 'message': 'Account locked. Try again later.'}
+        
         user_repo = RepositoryFactory.get_user_repository()
         patient_repo = RepositoryFactory.get_patient_repository()
         doctor_repo = RepositoryFactory.get_doctor_repository()
-        
-        password_hash = Authentication.hash_password(password)
         
         user = user_repo.find_by_email(email)
         if not user:
@@ -21,9 +29,23 @@ class UserController:
             user = doctor_repo.find_by_email(email)
         
         if user and Authentication.verify_password(password, user.password_hash):
+            # Reset attempts on success
+            if email in UserController._login_attempts:
+                del UserController._login_attempts[email]
+                
             Authentication.login_user(user)
             return {'success': True, 'user': user}
         
+        # Handle failure
+        if email not in UserController._login_attempts:
+            UserController._login_attempts[email] = {'count': 0, 'lock_until': None}
+        
+        UserController._login_attempts[email]['count'] += 1
+        
+        if UserController._login_attempts[email]['count'] >= 3:
+            UserController._login_attempts[email]['lock_until'] = datetime.now() + timedelta(minutes=5)
+            return {'success': False, 'message': 'Account locked for 5 minutes due to multiple failed attempts.'}
+            
         return {'success': False, 'message': 'Invalid email or password'}
     
     @staticmethod
@@ -33,11 +55,23 @@ class UserController:
     
     @staticmethod
     def register(email, password, first_name, last_name, user_type='patient', **kwargs):
+        # Validation Logic
+        if not email or '@' not in email:
+            return {'success': False, 'message': 'Invalid email address'}
+        if not password or len(password) < 8:
+            return {'success': False, 'message': 'Password must be at least 8 characters'}
+        if not first_name or not last_name:
+            return {'success': False, 'message': 'First and last name are required'}
+            
         user_repo = RepositoryFactory.get_user_repository()
         patient_repo = RepositoryFactory.get_patient_repository()
         doctor_repo = RepositoryFactory.get_doctor_repository()
         
-        existing_user = user_repo.find_by_email(email)
+        # Check all repositories for existing email to prevent duplicates across roles
+        existing_user = user_repo.find_by_email(email) or \
+                        patient_repo.find_by_email(email) or \
+                        doctor_repo.find_by_email(email)
+                        
         if existing_user:
             return {'success': False, 'message': 'Email already registered'}
         
@@ -74,14 +108,36 @@ class UserController:
                 email=email,
                 password_hash=password_hash,
                 first_name=first_name,
-                last_name=last_name
+                last_name=last_name,
+                role=user_type # generic user
             )
             user_repo.save(user)
         
         return {'success': True, 'user': user}
     
     @staticmethod
-    def update_profile(user_id, **updates):
+    def update_profile(user_id, requesting_user_id=None, **updates):
+        """
+        Update user profile with ownership validation and input validation.
+        Only the user themselves can update their profile.
+        """
+        # Ownership validation - user can only update their own profile
+        if requesting_user_id and requesting_user_id != user_id:
+            return {'success': False, 'message': 'You can only update your own profile'}
+        
+        # Input validation
+        if 'email' in updates:
+            if not updates['email'] or '@' not in updates['email']:
+                return {'success': False, 'message': 'Invalid email address'}
+        
+        if 'first_name' in updates:
+            if not updates['first_name'] or len(updates['first_name'].strip()) == 0:
+                return {'success': False, 'message': 'First name cannot be empty'}
+        
+        if 'last_name' in updates:
+            if not updates['last_name'] or len(updates['last_name'].strip()) == 0:
+                return {'success': False, 'message': 'Last name cannot be empty'}
+        
         user_repo = RepositoryFactory.get_user_repository()
         patient_repo = RepositoryFactory.get_patient_repository()
         doctor_repo = RepositoryFactory.get_doctor_repository()
@@ -98,6 +154,7 @@ class UserController:
         if not user:
             return {'success': False, 'message': 'User not found'}
         
+        # Apply updates
         if 'first_name' in updates:
             user.first_name = updates['first_name']
         if 'last_name' in updates:

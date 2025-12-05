@@ -22,7 +22,7 @@ class DoctorRepository(BaseRepository):
         self._initialized = True
     
     def get_fieldnames(self):
-        return ['user_id', 'email', 'password_hash', 'first_name', 'last_name', 
+        return ['user_id', 'email', 'password_hash', 'first_name', 'last_name', 'role',
                 'created_at', 'is_active', 'specialization', 'license_number', 'patients', 'appointments']
     
     def to_model(self, data):

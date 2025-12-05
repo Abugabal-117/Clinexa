@@ -3,6 +3,8 @@ from repositories.patient_repository import PatientRepository
 from repositories.doctor_repository import DoctorRepository
 from repositories.appointment_repository import AppointmentRepository
 from repositories.appointment_record_repository import AppointmentRecordRepository
+from repositories.notification_repository import NotificationRepository
+from repositories.feedback_repository import FeedbackRepository
 
 
 class RepositoryFactory:
@@ -11,7 +13,9 @@ class RepositoryFactory:
         'patient': PatientRepository,
         'doctor': DoctorRepository,
         'appointment': AppointmentRepository,
-        'appointment_record': AppointmentRecordRepository
+        'appointment_record': AppointmentRecordRepository,
+        'notification': NotificationRepository,
+        'feedback': FeedbackRepository
     }
     
     @classmethod
@@ -40,3 +44,11 @@ class RepositoryFactory:
     @classmethod
     def get_appointment_record_repository(cls):
         return cls.get_repository('appointment_record')
+    
+    @classmethod
+    def get_notification_repository(cls):
+        return cls.get_repository('notification')
+
+    @classmethod
+    def get_feedback_repository(cls):
+        return cls.get_repository('feedback')

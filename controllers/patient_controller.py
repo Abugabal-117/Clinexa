@@ -137,7 +137,27 @@ class PatientController:
         )
         
         appointment_repo.save(appointment)
+        
+        # Prototype: Send notification to doctor
+        from controllers.notification_controller import NotificationController
+        NotificationController.send_notification(
+            recipient_id=doctor_id,
+            message=f"New appointment booked by {patient.first_name} {patient.last_name} for {appointment_date} at {appointment_time}"
+        )
+        # Notify patient
+        NotificationController.send_notification(
+            recipient_id=patient_id,
+            message=f"Appointment confirmed with Dr. {doctor.last_name} on {appointment_date} at {appointment_time}"
+        )
+        
         return {'success': True, 'appointment': appointment}
+
+    @staticmethod
+    def search_doctors(query):
+        # Delegate to DoctorController or implement here
+        # For prototype completeness, we'll implement a direct call or rely on DoctorController
+        from controllers.doctor_controller import DoctorController
+        return DoctorController.search_doctors(query=query)
     
     @staticmethod
     def cancel_appointment(appointment_id):
@@ -166,3 +186,22 @@ class PatientController:
                 results.append(patient)
         
         return {'success': True, 'patients': results}
+
+    @staticmethod
+    def submit_feedback(patient_id, doctor_id, rating, comment=''):
+        from models.feedback import Feedback
+        import uuid
+        
+        feedback_repo = RepositoryFactory.get_feedback_repository()
+        
+        feedback_id = str(uuid.uuid4())[:8]
+        feedback = Feedback(
+            feedback_id=feedback_id,
+            patient_id=patient_id,
+            doctor_id=doctor_id,
+            rating=rating,
+            comment=comment
+        )
+        
+        feedback_repo.save(feedback)
+        return {'success': True, 'feedback': feedback}

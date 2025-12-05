@@ -6,7 +6,7 @@ class Doctor(User):
     def __init__(self, user_id, email, password_hash, first_name, last_name,
                  specialization=None, license_number=None, patients=None, appointments=None, **kwargs):
         super().__init__(user_id, email, password_hash, first_name, last_name,
-                        kwargs.get('created_at'), kwargs.get('is_active', True))
+                        role='doctor', created_at=kwargs.get('created_at'), is_active=kwargs.get('is_active', True))
         self.specialization = specialization
         self.license_number = license_number
         self.patients = patients or []

@@ -1,0 +1,4 @@
+notification_id,recipient_id,message,status,created_at
+5bec88f7,test_user_123,Your appointment is confirmed,read,2025-12-05 23:19:33
+0e0f5d01,test_user_123,Your appointment is confirmed,read,2025-12-05 23:35:09
+bcbab206,test_user_123,Your appointment is confirmed,read,2025-12-05 23:50:17
