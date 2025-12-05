@@ -1,229 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
+<<<<<<< HEAD=======>>>>>>> 5dbc448 (Front End initial version -- For patient@)
 
-=======
->>>>>>> 5dbc448 (Front End initial version -- For patient@)
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Appointment</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Appointment</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-<body>
-    <div class="nav-container">
-        <a href="{{ url_for('doctor_profile') }}" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
+    <body>
+        <div class="nav-container">
+            <a href="{{ url_for('doctor_profile') }}" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                >>>>>>> 5dbc448 (Front End initial version -- For patient@)
+                Back to Doctor Profile
+            </a>
+        </div>
+
+        <div class="center-content">
+            <div class="content-card booking-container">
+                <<<<<<< HEAD <h1 style="margin-bottom: 5px;">Book an Appointment</h1>
+                    <p style="color:#64748b; margin-bottom: 25px;">Select a doctor, day, and time</p>
+
+                    <form action="{{ url_for('booking') }}" method="POST">
+                        <div class="form-group">
+                            <label>Select Doctor</label>
+                            <div class="input-wrapper">
+                                <select name="doctor_id" class="form-control"
+                                    style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;"
+                                    required>
+                                    <option value="" disabled selected>Choose a doctor...</option>
+                                    {% for doctor in doctors %}
+                                    <option value="{{ doctor.user_id }}">Dr. {{ doctor.last_name }} ({{
+                                        doctor.specialization
+                                        }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date</label>
+                            <div class="input-wrapper">
+                                <input type="date" name="date" class="form-control"
+                                    style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Time</label>
+                            <div class="input-wrapper">
+                                <input type="time" name="time" class="form-control"
+                                    style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Reason for Visit</label>
+                            <div class="input-wrapper">
+                                <textarea name="reason" placeholder="Briefly describe the reason for your visit..."
+                                    style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 80px;"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="confirm-btn btn-blue"
+                            style="width: 100%; border: none; cursor: pointer; margin-top: 20px;">
+                            Confirm Booking
+                        </button>
+                    </form>
+            </div>
+        </div>
+    </body>
+
+    =======
+
+    <h1 style="margin-bottom: 5px;">Book an Appointment</h1>
+    <p style="color:#64748b; margin-bottom: 25px;">Select a day and time that works for you</p>
+
+    <div class="section-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        Select Day
+    </div>
+
+    <div class="date-list">
+        <button class="date-option">
+            <div class="day-info">
+                <span class="day-name">Saturday</span>
+                <span class="day-date">Dec 14, 2024</span>
+            </div>
+        </button>
+
+        <button class="date-option">
+            <div class="day-info">
+                <span class="day-name">Sunday</span>
+                <span class="day-date">Dec 15, 2024</span>
+            </div>
+        </button>
+
+        <button class="date-option">
+            <div class="day-info">
+                <span class="day-name">Monday</span>
+                <span class="day-date">Dec 16, 2024</span>
+            </div>
+        </button>
+
+        <button class="date-option">
+            <div class="day-info">
+                <span class="day-name">Tuesday</span>
+                <span class="day-date">Dec 17, 2024</span>
+            </div>
+        </button>
+
+        <button class="date-option">
+            <div class="day-info">
+                <span class="day-name">Wednesday</span>
+                <span class="day-date">Dec 18, 2024</span>
+            </div>
+        </button>
+
+        <button class="date-option">
+            <div class="day-info">
+                <span class="day-name">Thursday</span>
+                <span class="day-date">Dec 19, 2024</span>
+            </div>
+        </button>
+
+        <button class="date-option unavailable">
+            <div class="day-info">
+                <span class="day-name">Friday</span>
+                <span class="day-date">Dec 20, 2024</span>
+            </div>
+            <span class="status-badge">Not Available</span>
+        </button>
+    </div>
+
+    <div class="time-section show" style="display: block;">
+        <div class="section-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-=======
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="nav-container">
-        <a href="doctor-profile.html" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
->>>>>>> 5dbc448 (Front End initial version -- For patient@)
-            Back to Doctor Profile
-        </a>
-    </div>
-
-    <div class="center-content">
-        <div class="content-card booking-container">
-<<<<<<< HEAD
-            <h1 style="margin-bottom: 5px;">Book an Appointment</h1>
-            <p style="color:#64748b; margin-bottom: 25px;">Select a doctor, day, and time</p>
-
-            <form action="{{ url_for('booking') }}" method="POST">
-                <div class="form-group">
-                    <label>Select Doctor</label>
-                    <div class="input-wrapper">
-                        <select name="doctor_id" class="form-control"
-                            style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;" required>
-                            <option value="" disabled selected>Choose a doctor...</option>
-                            {% for doctor in doctors %}
-                            <option value="{{ doctor.user_id }}">Dr. {{ doctor.last_name }} ({{ doctor.specialization
-                                }})</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Date</label>
-                    <div class="input-wrapper">
-                        <input type="date" name="date" class="form-control"
-                            style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Time</label>
-                    <div class="input-wrapper">
-                        <input type="time" name="time" class="form-control"
-                            style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Reason for Visit</label>
-                    <div class="input-wrapper">
-                        <textarea name="reason" placeholder="Briefly describe the reason for your visit..."
-                            style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 80px;"></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="confirm-btn btn-blue"
-                    style="width: 100%; border: none; cursor: pointer; margin-top: 20px;">
-                    Confirm Booking
-                </button>
-            </form>
+            Available Times
         </div>
-    </div>
-</body>
 
-=======
-            
-            <h1 style="margin-bottom: 5px;">Book an Appointment</h1>
-            <p style="color:#64748b; margin-bottom: 25px;">Select a day and time that works for you</p>
-
-            <div class="section-header">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                Select Day
-            </div>
-
-            <div class="date-list">
-                
-                <button class="date-option" onclick="selectDay(this, 'Saturday')">
-                    <div class="day-info">
-                        <span class="day-name">Saturday</span>
-                        <span class="day-date">Dec 14, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option" onclick="selectDay(this, 'Sunday')">
-                    <div class="day-info">
-                        <span class="day-name">Sunday</span>
-                        <span class="day-date">Dec 15, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option" onclick="selectDay(this, 'Monday')">
-                    <div class="day-info">
-                        <span class="day-name">Monday</span>
-                        <span class="day-date">Dec 16, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option" onclick="selectDay(this, 'Tuesday')">
-                    <div class="day-info">
-                        <span class="day-name">Tuesday</span>
-                        <span class="day-date">Dec 17, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option" onclick="selectDay(this, 'Wednesday')">
-                    <div class="day-info">
-                        <span class="day-name">Wednesday</span>
-                        <span class="day-date">Dec 18, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option" onclick="selectDay(this, 'Thursday')">
-                    <div class="day-info">
-                        <span class="day-name">Thursday</span>
-                        <span class="day-date">Dec 19, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option unavailable">
-                    <div class="day-info">
-                        <span class="day-name">Friday</span>
-                        <span class="day-date">Dec 20, 2024</span>
-                    </div>
-                    <span class="status-badge">Not Available</span>
-                </button>
-            </div>
-
-            <div class="time-section" id="timeSection">
-                <div class="section-header">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    Available Times for <span id="selectedDayText" style="margin-left:5px; color:#2563eb;">...</span>
-                </div>
-
-                <div class="time-grid">
-                    <button class="time-slot" onclick="selectTime(this)">09:00 AM</button>
-                    <button class="time-slot" onclick="selectTime(this)">10:00 AM</button>
-                    <button class="time-slot" onclick="selectTime(this)">11:00 AM</button>
-                    <button class="time-slot" onclick="selectTime(this)">01:00 PM</button>
-                    <button class="time-slot" onclick="selectTime(this)">02:00 PM</button>
-                    <button class="time-slot" onclick="selectTime(this)">03:00 PM</button>
-                    <button class="time-slot" onclick="selectTime(this)">04:00 PM</button>
-                    <button class="time-slot" onclick="selectTime(this)">05:00 PM</button>
-                    <button class="time-slot" onclick="selectTime(this)">06:00 PM</button>
-                </div>
-            </div>
-            
-            <button id="confirmBtn" class="confirm-btn btn-disabled" disabled onclick="window.location.href='appointments.html'">
-                Confirm Booking
-            </button>
+        <div class="time-grid">
+            <button class="time-slot">09:00 AM</button>
+            <button class="time-slot">10:00 AM</button>
+            <button class="time-slot">11:00 AM</button>
+            <button class="time-slot">01:00 PM</button>
+            <button class="time-slot">02:00 PM</button>
+            <button class="time-slot">03:00 PM</button>
+            <button class="time-slot">04:00 PM</button>
+            <button class="time-slot">05:00 PM</button>
+            <button class="time-slot">06:00 PM</button>
         </div>
     </div>
 
-    <script>
-        const timeSection = document.getElementById('timeSection');
-        const selectedDayText = document.getElementById('selectedDayText');
-        const confirmBtn = document.getElementById('confirmBtn');
+    <a href="{{ url_for('appointments') }}" class="confirm-btn btn-blue"
+        style="text-decoration: none; text-align: center; display: block; color: white;">
+        Confirm Booking
+    </a>
+    </div>
+    </div>
+    </body>
+    >>>>>>> 5dbc448 (Front End initial version -- For patient@)
 
-        // دالة اختيار اليوم
-        function selectDay(element, dayName) {
-            // إزالة كلاس active من جميع الأيام
-            document.querySelectorAll('.date-option').forEach(el => el.classList.remove('active'));
-            
-            // تفعيل اليوم المختار
-            element.classList.add('active');
-
-            // إظهار قسم الأوقات
-            timeSection.classList.add('show');
-            selectedDayText.textContent = dayName;
-
-            // إعادة تعيين اختيار الوقت وزر التأكيد عند تغيير اليوم
-            document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
-            disableConfirmButton();
-        }
-
-        // دالة اختيار الوقت
-        function selectTime(element) {
-            // إزالة كلاس selected من جميع الأوقات
-            document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
-            
-            // تفعيل الوقت المختار
-            element.classList.add('selected');
-
-            // تفعيل زر التأكيد
-            enableConfirmButton();
-        }
-
-        function enableConfirmButton() {
-            confirmBtn.classList.remove('btn-disabled');
-            confirmBtn.classList.add('btn-blue'); // كلاس الزر الأزرق الموجود في style.css
-            confirmBtn.style.color = "white";
-            confirmBtn.style.backgroundColor = "#2563eb";
-            confirmBtn.disabled = false;
-        }
-
-        function disableConfirmButton() {
-            confirmBtn.classList.add('btn-disabled');
-            confirmBtn.classList.remove('btn-blue');
-            confirmBtn.style.color = "#94a3b8";
-            confirmBtn.style.backgroundColor = "#e2e8f0";
-            confirmBtn.disabled = true;
-        }
-    </script>
-</body>
->>>>>>> 5dbc448 (Front End initial version -- For patient@)
 </html>

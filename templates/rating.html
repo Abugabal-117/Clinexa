@@ -9,12 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rate Doctor Experience</title>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 =======
     <link rel="stylesheet" href="style.css">
+=======
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+>>>>>>> 1c67667 (removed clinicapp folder)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 >>>>>>> 5dbc448 (Front End initial version -- For patient@)
@@ -23,10 +27,14 @@
     <div class="rating-page-wrapper">
         <div class="header-container">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <a href="{{ url_for('doctor_profile') }}" class="btn-back">
 =======
             <a href="doctor-profile.html" class="btn-back">
 >>>>>>> 5dbc448 (Front End initial version -- For patient@)
+=======
+            <a href="{{ url_for('doctor_profile') }}" class="btn-back">
+>>>>>>> 1c67667 (removed clinicapp folder)
                 <i class="fas fa-arrow-left"></i>
                 <span>Back to Doctor Profile</span>
             </a>
@@ -124,9 +132,9 @@
             </div>
 
             <div class="rating-actions">
-                <a href="doctor-profile.html" class="btn btn-cancel" style="text-decoration: none; text-align: center;">Cancel</a>
+                <a href="{{ url_for('doctor_profile') }}" class="btn btn-cancel" style="text-decoration: none; text-align: center;">Cancel</a>
                 
-                <a href="doctor-profile.html" class="btn btn-submit" style="text-decoration: none;">
+                <a href="{{ url_for('doctor_profile') }}" class="btn btn-submit" style="text-decoration: none;">
                     <i class="fas fa-paper-plane"></i>
                     Submit Feedback
                 </a>
