@@ -12,7 +12,7 @@ app.secret_key = secrets.token_hex(16)
 @app.route('/')
 def home():
     if 'user' in session:
-        return handle_dashboard()
+        return redirect(url_for('dashboard'))
     return render_template('index.html')
 
 def handle_login():
@@ -44,7 +44,7 @@ def login():
                 'first_name': user.first_name,
                 'last_name': user.last_name
             }
-            return handle_dashboard()
+            return redirect(url_for('dashboard'))
         else:
             flash(result['message'], 'error')
             
@@ -77,9 +77,9 @@ def signup():
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.clear()
     UserController.logout()
-    return handle_login()
+    return redirect(url_for('home'))
 
 @app.route('/dashboard')
 @login_required
@@ -106,15 +106,53 @@ def doctor_profile(doctor_id):
         if session['user']['role'] == 'doctor':
             doctor_id = session['user']['id']
         else:
-            return handle_dashboard()
+            # For patients, get the first available doctor
+            doctors = DoctorController.get_all_doctors()['doctors']
+            if doctors and len(doctors) > 0:
+                doctor_id = doctors[0].user_id
+            else:
+                flash('No doctors available', 'error')
+                return redirect(url_for('dashboard'))
 
     result = DoctorController.get_doctor(doctor_id)
     if result['success']:
         doctor = result['doctor']
-        feedback = DoctorController.get_feedback(doctor_id)['feedback']
+        feedback_result = DoctorController.get_feedback(doctor_id)
+        feedback = feedback_result.get('feedback', []) if feedback_result['success'] else []
         return render_template('doctor-profile.html', doctor=doctor, feedback=feedback)
     
-    return handle_dashboard()
+    flash('Doctor not found', 'error')
+    return redirect(url_for('dashboard'))
+
+@app.route('/about-doctor', defaults={'doctor_id': None})
+@app.route('/about-doctor/<doctor_id>')
+def about_doctor(doctor_id):
+    if not doctor_id:
+        # Get the first available doctor
+        doctors = DoctorController.get_all_doctors()['doctors']
+        if doctors and len(doctors) > 0:
+            doctor_id = doctors[0].user_id
+        else:
+            flash('No doctors available', 'error')
+            # Redirect to home if not logged in, dashboard if logged in
+            if 'user' in session:
+                return redirect(url_for('dashboard'))
+            return redirect(url_for('home'))
+
+    result = DoctorController.get_doctor(doctor_id)
+    if result['success']:
+        doctor = result['doctor']
+        feedback_result = DoctorController.get_feedback(doctor_id)
+        feedback = feedback_result.get('feedback', []) if feedback_result['success'] else []
+        # Calculate average rating
+        avg_rating = 0.0
+        if feedback and len(feedback) > 0:
+            total_rating = sum(item.rating for item in feedback)
+            avg_rating = round(total_rating / len(feedback), 1)
+        return render_template('about-doctor.html', doctor=doctor, feedback=feedback, avg_rating=avg_rating)
+    
+    flash('Doctor not found', 'error')
+    return redirect(url_for('dashboard'))
 
 @app.route('/booking', methods=['GET', 'POST'])
 @patient_required
@@ -124,7 +162,7 @@ def booking():
     # Auto-select the only doctor if there's only one
     if not doctors or len(doctors) == 0:
         flash('No doctors available', 'error')
-        return handle_dashboard()
+        return redirect(url_for('dashboard'))
     
     # Always use the first (and only) doctor
     selected_doctor = doctors[0]
@@ -146,7 +184,7 @@ def booking():
         
         if result['success']:
             flash('Appointment booked successfully!', 'success')
-            return  handle_dashboard()
+            return redirect(url_for('appointments'))
         else:
             flash(result['message'], 'error')
 
@@ -177,7 +215,7 @@ def rating():
     # Auto-select the only doctor if there's only one
     if not doctors or len(doctors) == 0:
         flash('No doctors available to rate', 'error')
-        return handle_dashboard()
+        return redirect(url_for('dashboard'))
     
     # Always use the first (and only) doctor
     selected_doctor = doctors[0]
@@ -249,7 +287,7 @@ def edit_profile():
         else:
             flash(result.get('message', 'Failed to update profile'), 'error')
         
-        return handle_dashboard()
+        return redirect(url_for('edit_profile'))
         
     user = UserController.get_profile(session['user']['id'])['user']
     return render_template('edit-profile.html', user=user)
@@ -287,7 +325,11 @@ def cancel_appointment():
     else:
         flash(result.get('message', 'Failed to cancel appointment'), 'error')
     
-    return redirect(url_for('appointments'))
+    # Redirect to appropriate page based on user role
+    if user_role == 'patient':
+        return redirect(url_for('appointments'))
+    else:
+        return redirect(url_for('appointments'))
 
 if __name__ == '__main__':
     app.run(debug=True)

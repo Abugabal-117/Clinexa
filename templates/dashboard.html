@@ -30,12 +30,9 @@
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <div style="margin: 20px auto; max-width: 800px;">
+            <div class="margin-20-auto max-width-800">
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" style="padding: 12px; border-radius: 8px; margin-bottom: 10px; 
-                        {% if category == 'error' %}background-color: #fee; color: #c33; border: 1px solid #fcc;
-                        {% elif category == 'success' %}background-color: #efe; color: #3c3; border: 1px solid #cfc;
-                        {% else %}background-color: #eef; color: #33c; border: 1px solid #ccf;{% endif %}">
+                    <div class="alert alert-{{ category }} padding-12 border-radius-8 margin-bottom-10">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -69,6 +66,17 @@
             </div>
             <h3>Rate Doctor</h3>
             <p>Give feedback on your visits</p>
+        </a>
+
+        <a href="{{ url_for('about_doctor') }}" class="dash-card">
+            <div class="dash-icon-circle">
+                <svg class="dash-icon-svg" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <h3>About Doctor</h3>
+            <p>View doctor information and reviews</p>
         </a>
         {% elif user.role == 'doctor' %}
         <!-- Doctor only links -->

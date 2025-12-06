@@ -14,7 +14,7 @@
         <div class="logo">Clinic System</div>
     </header>
 
-    <div class="center-content" style="flex-direction: column;">
+    <div class="center-content flex-direction-column">
         <div class="hero-text">
             <h1>Welcome to Your Healthcare Portal</h1>
             <p>Choose your role to continue</p>
@@ -46,6 +46,18 @@
                 <h2>Patient</h2>
                 <p>Book appointments and manage your health information</p>
                 <a href="{{ url_for('login') }}" class="btn btn-green">Continue as Patient</a>
+            </div>
+
+            <div class="role-card role-card-gradient">
+                <div class="icon-wrapper role-card-icon-wrapper">
+                    <svg class="icon-svg-white" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <h2>About Our Doctor</h2>
+                <p>Learn more about our healthcare provider and read patient reviews</p>
+                <a href="{{ url_for('about_doctor') }}" class="btn btn-green role-card-white-btn">View Doctor Profile</a>
             </div>
         </div>
     </div>

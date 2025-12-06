@@ -20,7 +20,7 @@
         </a>
     </div>
 
-    <div class="center-content" style="flex-direction:column; align-items: center;">
+    <div class="center-content flex-direction-column align-items-center">
 
         <div class="page-header-text">
             <h1>Clinic Service</h1>
@@ -79,12 +79,11 @@
                         {{ appointment.appointment_time }}
                     </div>
                 </div>
-                <div class="appt-actions" style="margin-top: 15px;">
-                    <form method="POST" action="{{ url_for('cancel_appointment') }}" style="display: inline;"
+                <div class="appt-actions margin-top-15">
+                    <form method="POST" action="{{ url_for('cancel_appointment') }}" class="display-inline"
                         onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
                         <input type="hidden" name="appointment_id" value="{{ appointment.appointment_id }}">
-                        <button type="submit" class="btn-action cancel"
-                            style="border: none; cursor: pointer; padding: 8px 16px;">
+                        <button type="submit" class="btn-action cancel border-none cursor-pointer padding-8-16">
                             Cancel Appointment
                         </button>
                     </form>
@@ -94,7 +93,7 @@
             {% endif %}
 
             {% if past_appts %}
-            <div class="section-label" style="margin-top: 30px;">
+            <div class="section-label margin-top-30">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
@@ -140,11 +139,13 @@
                 </div>
             </div>
             {% endfor %}
-            
-            <div class="actions-card" style="display: block; opacity: 1; transform: none; margin-top: 30px;">
+            {% endif %}
+
+            {% if appointments %}
+            <div class="actions-card display-block opacity-1 transform-none margin-top-30">
                 <h3 class="actions-title">Actions</h3>
                 <div class="actions-buttons">
-                    <a href="{{ url_for('booking') }}" class="btn-action reschedule" style="text-decoration: none;">
+                    <a href="{{ url_for('booking') }}" class="btn-action reschedule text-decoration-none">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -158,8 +159,17 @@
             {% endif %}
 
             {% else %}
-            <div style="text-align: center; padding: 40px; color: #64748b;">
+            <div class="no-appointments-container">
                 <p>No appointments found.</p>
+                <a href="{{ url_for('booking') }}" class="btn-action reschedule text-decoration-none display-inline-block margin-top-20">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Book an Appointment
+                </a>
             </div>
             {% endif %}
 
