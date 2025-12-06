@@ -12,7 +12,7 @@
 
     <header class="dash-header">
         <div class="dash-logo">Clinic System</div>
-        <a href="{{ url_for('home') }}" class="back-link">
+        <a href="{{ url_for('logout') }}" class="back-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -29,15 +29,15 @@
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="margin-20-auto max-width-800">
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} padding-12 border-radius-8 margin-bottom-10">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+    {% if messages %}
+    <div class="margin-20-auto max-width-800">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} padding-12 border-radius-8 margin-bottom-10">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
 
     <div class="dash-grid">
@@ -66,17 +66,6 @@
             </div>
             <h3>Rate Doctor</h3>
             <p>Give feedback on your visits</p>
-        </a>
-
-        <a href="{{ url_for('about_doctor') }}" class="dash-card">
-            <div class="dash-icon-circle">
-                <svg class="dash-icon-svg" viewBox="0 0 24 24">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </div>
-            <h3>About Doctor</h3>
-            <p>View doctor information and reviews</p>
         </a>
         {% elif user.role == 'doctor' %}
         <!-- Doctor only links -->

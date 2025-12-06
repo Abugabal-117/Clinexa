@@ -94,17 +94,34 @@
                     </div>
 
                     <div class="time-grid margin-bottom-25">
-                        <button type="button" class="time-slot" data-time="09:00">09:00 AM</button>
-                        <button type="button" class="time-slot" data-time="10:00">10:00 AM</button>
-                        <button type="button" class="time-slot" data-time="11:00">11:00 AM</button>
-                        <button type="button" class="time-slot" data-time="13:00">01:00 PM</button>
-                        <button type="button" class="time-slot" data-time="14:00">02:00 PM</button>
-                        <button type="button" class="time-slot" data-time="15:00">03:00 PM</button>
-                        <button type="button" class="time-slot" data-time="16:00">04:00 PM</button>
-                        <button type="button" class="time-slot" data-time="17:00">05:00 PM</button>
-                        <button type="button" class="time-slot" data-time="18:00">06:00 PM</button>
+                        <input type="radio" name="time" id="time-09" value="09:00" class="time-radio" required>
+                        <label for="time-09" class="time-slot">09:00 AM</label>
+
+                        <input type="radio" name="time" id="time-10" value="10:00" class="time-radio">
+                        <label for="time-10" class="time-slot">10:00 AM</label>
+
+                        <input type="radio" name="time" id="time-11" value="11:00" class="time-radio">
+                        <label for="time-11" class="time-slot">11:00 AM</label>
+
+                        <input type="radio" name="time" id="time-13" value="13:00" class="time-radio">
+                        <label for="time-13" class="time-slot">01:00 PM</label>
+
+                        <input type="radio" name="time" id="time-14" value="14:00" class="time-radio">
+                        <label for="time-14" class="time-slot">02:00 PM</label>
+
+                        <input type="radio" name="time" id="time-15" value="15:00" class="time-radio">
+                        <label for="time-15" class="time-slot">03:00 PM</label>
+
+                        <input type="radio" name="time" id="time-16" value="16:00" class="time-radio">
+                        <label for="time-16" class="time-slot">04:00 PM</label>
+
+                        <input type="radio" name="time" id="time-17" value="17:00" class="time-radio">
+                        <label for="time-17" class="time-slot">05:00 PM</label>
+
+                        <input type="radio" name="time" id="time-18" value="18:00" class="time-radio">
+                        <label for="time-18" class="time-slot">06:00 PM</label>
                     </div>
-                    <input type="hidden" name="time" id="timeInput" required>
+
 
                     <!-- Reason -->
                     <div class="section-header">
@@ -150,8 +167,9 @@
                     </div>
                     {% endfor %}
                     {% if feedback|length > 5 %}
+                    <input type="checkbox" id="show-more-toggle" class="show-more-checkbox">
                     {% for item in feedback[5:] %}
-                    <div class="exp-item feedback-item hidden">
+                    <div class="exp-item feedback-item feedback-item-hidden">
                         <div class="exp-icon-box">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                                 <path
@@ -167,9 +185,10 @@
                     </div>
                     {% endfor %}
                     <div class="show-more-container">
-                        <button id="showMoreBtn" class="btn btn-outline-blue" onclick="showMoreFeedbacks()">
-                            Show More Feedbacks
-                        </button>
+                        <label for="show-more-toggle" class="btn btn-outline-blue show-more-label">
+                            <span class="show-more-text">Show More Feedbacks</span>
+                            <span class="show-less-text">Show Less Feedbacks</span>
+                        </label>
                     </div>
                     {% endif %}
                 </div>
@@ -181,38 +200,8 @@
         </div>
     </div>
 
-    <script>
-        // Handle time slot selection
-        document.querySelectorAll('.time-slot').forEach(button => {
-            button.addEventListener('click', function () {
-                // Remove active class from all time slots
-                document.querySelectorAll('.time-slot').forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
-                // Set the hidden input value
-                document.getElementById('timeInput').value = this.dataset.time;
-            });
-        });
 
-        // Set minimum date to today
-        const dateInput = document.getElementById('dateInput');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.min = today;
 
-        function showMoreFeedbacks() {
-            const hiddenItems = document.querySelectorAll('.feedback-item[style*="display: none"]');
-            const btn = document.getElementById('showMoreBtn');
-            
-            hiddenItems.forEach(item => {
-                item.classList.remove('hidden');
-                item.style.display = 'flex';
-            });
-            
-            if (btn) {
-                btn.classList.add('hidden');
-            }
-        }
-    </script>
 </body>
 
 </html>

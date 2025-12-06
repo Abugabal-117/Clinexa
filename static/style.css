@@ -742,3 +742,26 @@ body.home-page {
 .max-width-800 { max-width: 800px; }
 .flex-direction-column { flex-direction: column; }
 .align-items-center { align-items: center; }
+
+
+/* Pure CSS Time Selection using Radio Buttons */
+.time-radio { display: none; }
+
+.time-radio + .time-slot { display: block; text-align: center; }
+
+.time-radio:checked + .time-slot { background-color: #2563eb; color: white; border-color: #2563eb; box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2); }
+
+/* Pure CSS Show More Feedback using Checkbox Hack */
+.show-more-checkbox { display: none; }
+
+.feedback-item-hidden { display: none !important; }
+
+.show-more-checkbox:checked ~ .feedback-item-hidden { display: flex !important; }
+
+.show-less-text { display: none; }
+
+.show-more-checkbox:checked ~ .show-more-container .show-more-text { display: none; }
+
+.show-more-checkbox:checked ~ .show-more-container .show-less-text { display: inline; }
+
+.show-more-label { cursor: pointer; user-select: none; }
