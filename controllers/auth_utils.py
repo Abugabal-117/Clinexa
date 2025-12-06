@@ -16,7 +16,8 @@ def patient_required(f):
         if 'user' not in session:
             flash('Please login to access this page', 'error')
             return redirect(url_for('login'))
-        if session['user'].get('role') != 'patient':
+        user_role = session['user'].get('role')
+        if not user_role or user_role != 'patient':
             flash('This page is only for patients', 'error')
             return redirect(url_for('dashboard'))
         return f(*args, **kwargs)

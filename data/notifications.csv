@@ -2,3 +2,9 @@ notification_id,recipient_id,message,status,created_at
 5bec88f7,test_user_123,Your appointment is confirmed,read,2025-12-05 23:19:33
 0e0f5d01,test_user_123,Your appointment is confirmed,read,2025-12-05 23:35:09
 bcbab206,test_user_123,Your appointment is confirmed,read,2025-12-05 23:50:17
+b5d6fa45,87b4f241,New appointment booked by mohamed mosab for 2026-01-05 at 14:00,unread,2025-12-06 09:23:42
+38a66059,6c194319,Appointment confirmed with Dr. Doe on 2026-01-05 at 14:00,unread,2025-12-06 09:23:42
+74d86b37,003,New appointment booked by mohamed mosab for 2025-12-19 at 13:00,unread,2025-12-06 09:55:58
+7fd45af1,6c194319,Appointment confirmed with Dr. Johnson on 2025-12-19 at 13:00,unread,2025-12-06 09:55:58
+56ece944,003,New appointment booked by mohamed mosab for 2025-12-26 at 11:00,unread,2025-12-06 09:56:15
+7050b4b8,6c194319,Appointment confirmed with Dr. Johnson on 2025-12-26 at 11:00,unread,2025-12-06 09:56:15

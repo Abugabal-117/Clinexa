@@ -10,112 +10,175 @@
 
 <body>
     <div class="nav-container">
-        <a href="{{ url_for('doctor_profile') }}" class="back-link">
+        <a href="{{ url_for('dashboard') }}" class="back-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            Back to Doctor Profile
+            Back to Dashboard
         </a>
     </div>
 
-    <div class="center-content">
-        <div class="content-card booking-container">
+    <div class="center-content" style="align-items: flex-start;">
+        <div class="profile-container">
 
-            <h1 style="margin-bottom: 5px;">Book an Appointment</h1>
-            <p style="color:#64748b; margin-bottom: 25px;">Select a day and time that works for you</p>
-
-            <div class="section-header">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                Select Day
-            </div>
-
-            <div class="date-list">
-                <button class="date-option">
-                    <div class="day-info">
-                        <span class="day-name">Saturday</span>
-                        <span class="day-date">Dec 14, 2024</span>
+            {% if doctor %}
+            <!-- SECTION 1: Doctor Information -->
+            <div class="content-card doc-profile-card">
+                <div class="doc-header-row">
+                    <div class="img-wrapper">
+                        <svg width="100" height="100" viewBox="0 0 24 24" fill="#cbd5e1" style="border-radius: 50%;">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
                     </div>
-                </button>
 
-                <button class="date-option">
-                    <div class="day-info">
-                        <span class="day-name">Sunday</span>
-                        <span class="day-date">Dec 15, 2024</span>
+                    <div class="doc-info">
+                        <h1>{{ doctor.get_full_name() }}</h1>
+                        <span class="doc-specialty">{{ doctor.specialization }}</span>
+
+                        <div class="rating-row">
+                            <div class="stars">
+                                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                                    </path>
+                                </svg>
+                                <span class="rating-text">{{ feedback|length }} reviews</span>
+                            </div>
+                        </div>
+
+                        <p class="doc-bio">
+                            Professional healthcare provider dedicated to your wellbeing.
+                            Book your appointment below to get personalized medical care.
+                        </p>
                     </div>
-                </button>
-
-                <button class="date-option">
-                    <div class="day-info">
-                        <span class="day-name">Monday</span>
-                        <span class="day-date">Dec 16, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option">
-                    <div class="day-info">
-                        <span class="day-name">Tuesday</span>
-                        <span class="day-date">Dec 17, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option">
-                    <div class="day-info">
-                        <span class="day-name">Wednesday</span>
-                        <span class="day-date">Dec 18, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option">
-                    <div class="day-info">
-                        <span class="day-name">Thursday</span>
-                        <span class="day-date">Dec 19, 2024</span>
-                    </div>
-                </button>
-
-                <button class="date-option unavailable">
-                    <div class="day-info">
-                        <span class="day-name">Friday</span>
-                        <span class="day-date">Dec 20, 2024</span>
-                    </div>
-                    <span class="status-badge">Not Available</span>
-                </button>
-            </div>
-
-            <div class="time-section show" style="display: block;">
-                <div class="section-header">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    Available Times
-                </div>
-
-                <div class="time-grid">
-                    <button class="time-slot">09:00 AM</button>
-                    <button class="time-slot">10:00 AM</button>
-                    <button class="time-slot">11:00 AM</button>
-                    <button class="time-slot">01:00 PM</button>
-                    <button class="time-slot">02:00 PM</button>
-                    <button class="time-slot">03:00 PM</button>
-                    <button class="time-slot">04:00 PM</button>
-                    <button class="time-slot">05:00 PM</button>
-                    <button class="time-slot">06:00 PM</button>
                 </div>
             </div>
+            {% endif %}
 
-            <a href="{{ url_for('appointments') }}" class="confirm-btn btn-blue"
-                style="text-decoration: none; text-align: center; display: block; color: white;">
-                Confirm Booking
-            </a>
+            <!-- SECTION 2: Booking Form -->
+            <div class="content-card booking-container">
+                <h2 style="margin-bottom: 5px;">Book an Appointment</h2>
+                <p style="color:#64748b; margin-bottom: 25px;">Select a day and time that works for you</p>
+
+                <form method="POST" action="{{ url_for('booking') }}" id="bookingForm">
+                    <!-- Auto-select the only doctor (hidden field) -->
+                    {% if doctors and doctors|length > 0 %}
+                    <input type="hidden" name="doctor_id" value="{{ doctors[0].user_id }}">
+                    {% endif %}
+
+                    <!-- Date Selection -->
+                    <div class="section-header">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Select Date
+                    </div>
+
+                    <input type="date" name="date" id="dateInput" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; margin-bottom: 25px;">
+
+                    <!-- Time Selection -->
+                    <div class="section-header">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Select Time
+                    </div>
+
+                    <div class="time-grid" style="margin-bottom: 25px;">
+                        <button type="button" class="time-slot" data-time="09:00">09:00 AM</button>
+                        <button type="button" class="time-slot" data-time="10:00">10:00 AM</button>
+                        <button type="button" class="time-slot" data-time="11:00">11:00 AM</button>
+                        <button type="button" class="time-slot" data-time="13:00">01:00 PM</button>
+                        <button type="button" class="time-slot" data-time="14:00">02:00 PM</button>
+                        <button type="button" class="time-slot" data-time="15:00">03:00 PM</button>
+                        <button type="button" class="time-slot" data-time="16:00">04:00 PM</button>
+                        <button type="button" class="time-slot" data-time="17:00">05:00 PM</button>
+                        <button type="button" class="time-slot" data-time="18:00">06:00 PM</button>
+                    </div>
+                    <input type="hidden" name="time" id="timeInput" required>
+
+                    <!-- Reason -->
+                    <div class="section-header">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                        Reason for Visit (Optional)
+                    </div>
+
+                    <textarea name="reason" class="form-control" rows="3"
+                        placeholder="Describe your symptoms or reason for the appointment..."
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; margin-bottom: 25px; resize: vertical;"></textarea>
+
+                    <button type="submit" class="confirm-btn btn-blue"
+                        style="width: 100%; padding: 14px; border: none; cursor: pointer;">
+                        Confirm Booking
+                    </button>
+                </form>
+            </div>
+
+            <!-- SECTION 3: Client Feedback -->
+            <div class="content-card">
+                <h3 class="section-title">Patient Reviews</h3>
+
+                {% if feedback and feedback|length > 0 %}
+                <div class="exp-grid">
+                    {% for item in feedback %}
+                    <div class="exp-item">
+                        <div class="exp-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="exp-text">
+                            <h4>Rating: {{ item.rating }}/5</h4>
+                            <p>{{ item.comment }}</p>
+                            <p style="color: #94a3b8; font-size: 12px; margin-top: 5px;">{{ item.created_at }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p style="color: #64748b;">No reviews yet. Be the first to leave feedback!</p>
+                {% endif %}
+            </div>
+
         </div>
     </div>
+
+    <script>
+        // Handle time slot selection
+        document.querySelectorAll('.time-slot').forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove active class from all time slots
+                document.querySelectorAll('.time-slot').forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                // Set the hidden input value
+                document.getElementById('timeInput').value = this.dataset.time;
+            });
+        });
+
+        // Set minimum date to today
+        const dateInput = document.getElementById('dateInput');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+    </script>
 </body>
 
 </html>

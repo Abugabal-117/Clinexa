@@ -28,6 +28,21 @@
         <p>What would you like to do today?</p>
     </div>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div style="margin: 20px auto; max-width: 800px;">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="padding: 12px; border-radius: 8px; margin-bottom: 10px; 
+                        {% if category == 'error' %}background-color: #fee; color: #c33; border: 1px solid #fcc;
+                        {% elif category == 'success' %}background-color: #efe; color: #3c3; border: 1px solid #cfc;
+                        {% else %}background-color: #eef; color: #33c; border: 1px solid #ccf;{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <div class="dash-grid">
 
         {% if user.role == 'patient' %}
@@ -42,19 +57,6 @@
             </div>
             <h3>My Profile</h3>
             <p>Edit personal information and account settings</p>
-        </a>
-
-        <a href="{{ url_for('doctor_profile') }}" class="dash-card">
-            <div class="dash-icon-circle">
-                <svg class="dash-icon-svg" viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-            </div>
-            <h3>Book Appointment</h3>
-            <p>View doctor profiles and book appointments</p>
         </a>
 
         <a href="{{ url_for('rating') }}" class="dash-card">
@@ -92,7 +94,7 @@
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
             </div>
-            <h3>My Appointments</h3>
+            <h3>Clinic Service</h3>
             <p>View and manage your upcoming and past appointments</p>
         </a>
 
