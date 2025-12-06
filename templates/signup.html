@@ -1,43 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+    <div class="back-link-wrapper">
+        <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+    </div>
+
     <div class="center-content">
         <div class="auth-card">
-            <div class="role-badge">Patient</div>
+            <div class="role-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z">
+                    </path>
+                </svg>
+                Patient Signup
+            </div>
             <h1>Create Account</h1>
             <p style="color:#64748b; margin-bottom:30px;">Sign up to get started</p>
 
-            <form action="{{ url_for('dashboard') }}">
+            <form action="{{ url_for('signup') }}" method="POST">
                 <div class="form-group">
-                    <label>Full Name</label>
+                    <label>First Name</label>
                     <div class="input-wrapper">
-                        <input type="text" placeholder="Enter your full name">
+                        <svg class="input-icon" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <input type="text" name="first_name" placeholder="Enter your first name" required>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <input type="text" name="last_name" placeholder="Enter your last name" required>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Email Address</label>
                     <div class="input-wrapper">
-                        <input type="email" placeholder="Enter your email">
+                        <svg class="input-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z">
+                            </path>
+                        </svg>
+                        <input type="email" name="email" placeholder="Enter your email" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <div class="input-wrapper">
-                        <input type="tel" placeholder="Enter your phone number">
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label>Password</label>
                     <div class="input-wrapper">
-                        <input type="password" placeholder="Create a password">
+                        <svg class="input-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm9 13H6v-8h12v8z">
+                            </path>
+                        </svg>
+                        <input type="password" name="password" placeholder="Create a password" required>
                     </div>
                 </div>
+
                 <button type="submit" class="btn btn-green">Sign Up</button>
             </form>
 
@@ -47,4 +82,5 @@
         </div>
     </div>
 </body>
+
 </html>

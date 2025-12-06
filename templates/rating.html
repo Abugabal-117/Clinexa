@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <div class="rating-page-wrapper">
@@ -20,45 +22,121 @@
         <div class="rating-card">
             <div class="text-center">
                 <h2 class="rating-title">Rate Your Experience</h2>
-                <p class="rating-subtitle">Share your feedback about Dr. Sarah Mitchell</p>
+                <p class="rating-subtitle">Share your feedback about your doctor</p>
             </div>
 
-            <div class="rating-stars-wrapper">
-                <p class="stars-label">How would you rate your experience?</p>
-                
-                <div class="stars-container">
-                    <input type="radio" name="rating" id="star5" value="5">
-                    <label for="star5" title="5 Stars"><i class="fas fa-star"></i></label>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div style="margin-bottom: 20px;">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}" style="padding: 12px; border-radius: 8px; margin-bottom: 10px; 
+                                {% if category == 'error' %}background-color: #fee; color: #c33; border: 1px solid #fcc;
+                                {% elif category == 'success' %}background-color: #efe; color: #3c3; border: 1px solid #cfc;
+                                {% else %}background-color: #eef; color: #33c; border: 1px solid #ccf;{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
 
-                    <input type="radio" name="rating" id="star4" value="4">
-                    <label for="star4" title="4 Stars"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" name="rating" id="star3" value="3">
-                    <label for="star3" title="3 Stars"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" name="rating" id="star2" value="2">
-                    <label for="star2" title="2 Stars"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" name="rating" id="star1" value="1">
-                    <label for="star1" title="1 Star"><i class="fas fa-star"></i></label>
-                </div>
-            </div>
-
-            <div class="rating-input-group">
-                <label class="input-label">Write your feedback (optional)</label>
-                <textarea class="feedback-textarea" placeholder="Share your experience... What did you like? What could be improved?"></textarea>
-            </div>
-
-            <div class="rating-actions">
-                <a href="{{ url_for('doctor_profile') }}" class="btn btn-cancel" style="text-decoration: none; text-align: center;">Cancel</a>
-                
-                <a href="{{ url_for('doctor_profile') }}" class="btn btn-submit" style="text-decoration: none;">
-                    <i class="fas fa-paper-plane"></i>
-                    Submit Feedback
+            {% if success %}
+            <div style="text-align: center; padding: 20px;">
+                <p style="color: #3c3; font-size: 18px; margin-bottom: 20px;">Your feedback has been submitted successfully!</p>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-blue" style="text-decoration: none; display: inline-block;">
+                    Back to Dashboard
                 </a>
             </div>
+            {% else %}
+            <form method="POST" action="{{ url_for('rating') }}" id="ratingForm" onsubmit="return validateRatingForm()">
+                <input type="hidden" name="doctor_id" value="{{ doctor_id }}">
+
+                <div class="rating-stars-wrapper">
+                    <p class="stars-label">How would you rate your experience?</p>
+
+                    <div class="stars-container">
+                        <input type="radio" name="rating" id="star5" value="5" required>
+                        <label for="star5" title="5 Stars"><i class="fas fa-star"></i></label>
+
+                        <input type="radio" name="rating" id="star4" value="4">
+                        <label for="star4" title="4 Stars"><i class="fas fa-star"></i></label>
+
+                        <input type="radio" name="rating" id="star3" value="3">
+                        <label for="star3" title="3 Stars"><i class="fas fa-star"></i></label>
+
+                        <input type="radio" name="rating" id="star2" value="2">
+                        <label for="star2" title="2 Stars"><i class="fas fa-star"></i></label>
+
+                        <input type="radio" name="rating" id="star1" value="1">
+                        <label for="star1" title="1 Star"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+
+                <div class="rating-input-group">
+                    <label class="input-label">Write your feedback (optional)</label>
+                    <textarea name="comment" class="feedback-textarea"
+                        placeholder="Share your experience... What did you like? What could be improved?"></textarea>
+                </div>
+
+                <div class="rating-actions">
+                    <a href="{{ url_for('doctor_profile', doctor_id=doctor_id) }}" class="btn btn-cancel"
+                        style="text-decoration: none; text-align: center;">Cancel</a>
+
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Feedback
+                    </button>
+                </div>
+            </form>
+            {% endif %}
         </div>
     </div>
 
+    <script>
+        function validateRatingForm() {
+            const ratingInputs = document.querySelectorAll('input[name="rating"]');
+            let ratingSelected = false;
+            
+            for (let input of ratingInputs) {
+                if (input.checked) {
+                    ratingSelected = true;
+                    break;
+                }
+            }
+            
+            if (!ratingSelected) {
+                alert('Please select a rating before submitting.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Ensure at least one star is visually required
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('ratingForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const ratingInputs = document.querySelectorAll('input[name="rating"]');
+                    let ratingSelected = false;
+                    
+                    for (let input of ratingInputs) {
+                        if (input.checked) {
+                            ratingSelected = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!ratingSelected) {
+                        e.preventDefault();
+                        alert('Please select a rating (1-5 stars) before submitting your feedback.');
+                        return false;
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
+
 </html>
