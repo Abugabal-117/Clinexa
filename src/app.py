@@ -270,6 +270,42 @@ def edit_profile():
     user = UserController.get_profile(session['user']['id'])['user']
     return render_template('edit-profile.html', user=user)
 
+@app.route('/patient-report', methods=['GET', 'POST'])
+@login_required
+def patient_report():
+    return render_template('patient-report.html')
+
+@app.route('/schedule-management', methods=['GET', 'POST'])
+@login_required
+def schedule_management():
+    return render_template('schedule-management.html')
+
+@app.route('/doctor-signup', methods=['GET', 'POST'])
+def doctor_signup():
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        specialization = request.form.get('specialization', '')
+        
+        result = UserController.register(
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            user_type='doctor',
+            specialization=specialization
+        )
+        
+        if result['success']:
+            flash('Registration successful! Please login.', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash(result['message'], 'error')
+    
+    return render_template('doctor-signup.html')
+
 @app.route('/forgot-password')
 def forgot_password():
     return render_template('forgot-password.html')
