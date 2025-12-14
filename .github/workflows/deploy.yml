@@ -32,7 +32,7 @@ jobs:
         tar -czf clinexa-${{ github.sha }}.tar.gz src/ requirements.txt README.md
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: clinexa-deployment
         path: clinexa-${{ github.sha }}.tar.gz

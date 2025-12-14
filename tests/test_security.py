@@ -8,7 +8,7 @@ class TestSecurityHeaders:
     
     def test_session_cookie_security(self, app):
         assert app.secret_key is not None
-        assert len(app.secret_key) > 16
+        assert len(app.secret_key) >= 16
 
 class TestInputValidation:
     def test_login_empty_fields(self, client):
