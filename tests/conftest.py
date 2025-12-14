@@ -21,6 +21,10 @@ def test_data_dir():
 def app(test_data_dir, monkeypatch):
     monkeypatch.setenv('TESTING', 'True')
     
+    # Patch CSVManager to use test data directory
+    from core.csv_manager import CSVManager
+    monkeypatch.setattr(CSVManager(), 'data_dir', test_data_dir)
+    
     from app import app as flask_app
     
     flask_app.config.update({

@@ -28,11 +28,11 @@ class TestInputValidation:
 
 class TestAuthorizationChecks:
     def test_cannot_access_other_user_profile_without_login(self, client):
-        response = client.get('/edit_profile', follow_redirects=False)
+        response = client.get('/edit-profile', follow_redirects=False)
         assert response.status_code in [302, 401]
     
     def test_cannot_cancel_appointment_without_login(self, client):
-        response = client.post('/cancel_appointment', data={
+        response = client.post('/cancel-appointment', data={
             'appointment_id': '1'
         }, follow_redirects=False)
         assert response.status_code in [302, 401, 405]
