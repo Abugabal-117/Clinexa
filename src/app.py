@@ -163,25 +163,37 @@ def booking():
         time = request.form.get('time')
         reason = request.form.get('reason')
         
-        result = PatientController.book_appointment(
-            patient_id=session['user']['id'],
-            doctor_id=doctor_id,
-            appointment_date=date,
-            appointment_time=time,
-            reason=reason
-        )
+        # Validate that the selected time is in the doctor's available times
+        doctor_result = DoctorController.get_available_times(doctor_id)
+        available_times = doctor_result.get('available_times', []) if doctor_result['success'] else []
         
-        if result['success']:
-            flash('Appointment booked successfully!', 'success')
-            return redirect(url_for('appointments'))
+        selected_slot = {'date': date, 'time': time}
+        if selected_slot not in available_times:
+            flash('Selected time is not available. Please choose from available time slots.', 'error')
         else:
-            flash(result['message'], 'error')
+            result = PatientController.book_appointment(
+                patient_id=session['user']['id'],
+                doctor_id=doctor_id,
+                appointment_date=date,
+                appointment_time=time,
+                reason=reason
+            )
+            
+            if result['success']:
+                flash('Appointment booked successfully!', 'success')
+                return redirect(url_for('appointments'))
+            else:
+                flash(result['message'], 'error')
 
     doctor = selected_doctor
     feedback_result = DoctorController.get_feedback(doctor.user_id)
     feedback = feedback_result.get('feedback', []) if feedback_result['success'] else []
     
-    return render_template('booking.html', doctors=doctors, doctor=doctor, feedback=feedback)
+    # Get available times for the selected doctor
+    available_times_result = DoctorController.get_available_times(doctor.user_id)
+    available_times = available_times_result.get('available_times', []) if available_times_result['success'] else []
+    
+    return render_template('booking.html', doctors=doctors, doctor=doctor, feedback=feedback, available_times=available_times)
 
 @app.route('/appointments')
 @login_required
@@ -190,7 +202,13 @@ def appointments():
     user_id = session['user']['id']
     if session['user']['role'] == 'patient':
         result = PatientController.get_appointments(user_id)
-        return render_template('appointments.html', appointments=result['appointments'])
+        return render_template('appointments.html', appointments=result['appointments'], user_role='patient')
+    elif session['user']['role'] == 'doctor':
+        # Get doctor's patients
+        doctor_result = DoctorController.get_doctor(user_id)
+        doctor = doctor_result.get('doctor') if doctor_result['success'] else None
+        patients = doctor.patients if doctor else []
+        return render_template('appointments.html', appointments=[], patients=patients, user_role='doctor')
     
     return render_template('appointments.html', appointments=[])
 
@@ -278,33 +296,54 @@ def patient_report():
 @app.route('/schedule-management', methods=['GET', 'POST'])
 @login_required
 def schedule_management():
-    return render_template('schedule-management.html')
-
-@app.route('/doctor-signup', methods=['GET', 'POST'])
-def doctor_signup():
-    if request.method == 'POST':
-        first_name = request.form.get('first_name')
-        last_name = request.form.get('last_name')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        specialization = request.form.get('specialization', '')
-        
-        result = UserController.register(
-            email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,
-            user_type='doctor',
-            specialization=specialization
-        )
-        
-        if result['success']:
-            flash('Registration successful! Please login.', 'success')
-            return redirect(url_for('login'))
-        else:
-            flash(result['message'], 'error')
+    if session['user']['role'] != 'doctor':
+        flash('Unauthorized action', 'error')
+        return redirect(url_for('dashboard'))
     
-    return render_template('doctor-signup.html')
+    doctor_id = session['user']['id']
+    result = DoctorController.get_available_times(doctor_id)
+    available_times = result.get('available_times', []) if result['success'] else []
+    
+    if request.method == 'POST':
+        action = request.form.get('action')
+        date = request.form.get('date')
+        time = request.form.get('time')
+        
+        if action == 'add':
+            add_result = DoctorController.add_available_time(doctor_id, date, time)
+            if add_result['success']:
+                flash('Time slot added successfully', 'success')
+            else:
+                flash(add_result.get('message', 'Failed to add time slot'), 'error')
+        elif action == 'remove':
+            remove_result = DoctorController.remove_available_time(doctor_id, date, time)
+            if remove_result['success']:
+                flash('Time slot removed successfully', 'success')
+            else:
+                flash(remove_result.get('message', 'Failed to remove time slot'), 'error')
+        
+        return redirect(url_for('schedule_management'))
+    
+    return render_template('schedule-management.html', available_times=available_times)
+
+@app.route('/remove-patient/<patient_id>', methods=['POST'])
+@login_required
+def remove_patient(patient_id):
+    if session['user']['role'] != 'doctor':
+        flash('Unauthorized action', 'error')
+        return redirect(url_for('dashboard'))
+    
+    doctor_id = session['user']['id']
+    result = DoctorController.remove_patient(doctor_id, patient_id)
+    
+    if result['success']:
+        flash('Patient removed successfully', 'success')
+    else:
+        flash(result.get('message', 'Failed to remove patient'), 'error')
+    
+    return redirect(url_for('appointments'))
+
+
 
 @app.route('/forgot-password')
 def forgot_password():

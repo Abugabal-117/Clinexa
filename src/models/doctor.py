@@ -4,13 +4,14 @@ from models.user import User
 
 class Doctor(User):
     def __init__(self, user_id, email, password_hash, first_name, last_name,
-                 specialization=None, license_number=None, patients=None, appointments=None, **kwargs):
+                 specialization=None, license_number=None, patients=None, appointments=None, available_times=None, **kwargs):
         super().__init__(user_id, email, password_hash, first_name, last_name,
                         role='doctor', created_at=kwargs.get('created_at'), is_active=kwargs.get('is_active', True))
         self.specialization = specialization
         self.license_number = license_number
         self.patients = patients or []
         self.appointments = appointments or []
+        self.available_times = available_times or []
     
     def add_patient(self, patient):
         if patient not in self.patients:
@@ -22,7 +23,8 @@ class Doctor(User):
             'specialization': self.specialization or '',
             'license_number': self.license_number or '',
             'patients': json.dumps(self.patients),
-            'appointments': json.dumps(self.appointments)
+            'appointments': json.dumps(self.appointments),
+            'available_times': json.dumps(self.available_times)
         })
         return data
     
@@ -30,6 +32,7 @@ class Doctor(User):
     def from_dict(cls, data):
         patients = json.loads(data.get('patients', '[]'))
         appointments = json.loads(data.get('appointments', '[]'))
+        available_times = json.loads(data.get('available_times', '[]'))
         
         return cls(
             user_id=data['user_id'],
@@ -41,6 +44,7 @@ class Doctor(User):
             license_number=data.get('license_number') or None,
             patients=patients,
             appointments=appointments,
+            available_times=available_times,
             created_at=data.get('created_at'),
             is_active=data.get('is_active', 'True') == 'True'
         )

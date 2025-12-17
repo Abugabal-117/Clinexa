@@ -29,7 +29,46 @@
 
         <div class="appointments-container">
 
-            {% if appointments %}
+            {% if user_role == 'doctor' and patients %}
+            <div class="section-label">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                My Patients
+            </div>
+
+            {% for patient_id in patients %}
+            <div class="appt-card upcoming">
+                <div class="appt-main-info">
+                    <div class="doc-avatar">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Patient ID: {{ patient_id }}</h3>
+                        <span class="specialty">Active Patient</span>
+                    </div>
+                </div>
+                <div class="appt-actions margin-top-15">
+                    <form method="POST" action="{{ url_for('remove_patient', patient_id=patient_id) }}" class="display-inline"
+                        onsubmit="return confirm('Are you sure you want to remove this patient?');">
+                        <button type="submit" class="btn-action cancel border-none cursor-pointer padding-8-16">
+                            Remove Patient
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% elif user_role == 'doctor' %}
+            <div class="no-appointments-container">
+                <p>No patients assigned yet.</p>
+            </div>
+            {% else %}
             {% set upcoming_appts = appointments|selectattr('status', 'equalto', 'confirmed')|list %}
             {% set past_appts = appointments|selectattr('status', 'in', ['completed', 'cancelled'])|list %}
 
@@ -156,7 +195,6 @@
                     </a>
                 </div>
             </div>
-            {% endif %}
 
             {% else %}
             <div class="no-appointments-container">
@@ -171,6 +209,7 @@
                     Book an Appointment
                 </a>
             </div>
+            {% endif %}
             {% endif %}
 
         </div>
