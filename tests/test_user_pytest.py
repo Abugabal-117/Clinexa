@@ -10,7 +10,7 @@ from controllers.user_controller import UserController
 from core.authentication import Authentication
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture
 def test_env():
     test_dir = tempfile.mkdtemp()
     os.environ['DATA_DIR'] = test_dir

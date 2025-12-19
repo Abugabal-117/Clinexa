@@ -68,8 +68,8 @@ class TestAppRoutes(unittest.TestCase):
         }, follow_redirects=True)
         
         self.assertEqual(response.status_code, 200)
-        # Should show error message
-        self.assertIn(b'Invalid', response.data)
+        # Should return to login page (not redirect to dashboard)
+        self.assertIn(b'Login', response.data)
     
     def test_logout_route(self):
         """Test logout route"""
