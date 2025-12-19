@@ -27,6 +27,12 @@ def get_login_page():
 def get_signup_page():
     return render_template('signup.html')
 
+
+@app.route('/doctor-login')
+def doctor_login():
+    return render_template('doctor-login.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -92,7 +98,10 @@ def dashboard():
         appointments = appointments_result['appointments'] if appointments_result['success'] else []
         return render_template('dashboard.html', user=user, appointments=appointments)
     
-    return render_template('dashboard.html', user=user, appointments=[])
+    elif role == 'doctor':
+        return render_template('doctor-dashboard.html', user=user)
+    
+    return redirect(url_for('home'))
 
 @app.route('/doctor-profile', defaults={'doctor_id': None})
 @app.route('/doctor-profile/<doctor_id>')
@@ -291,7 +300,33 @@ def edit_profile():
 @app.route('/patient-report', methods=['GET', 'POST'])
 @login_required
 def patient_report():
-    return render_template('patient-report.html')
+    if session['user']['role'] != 'doctor':
+        flash('Unauthorized access', 'error')
+        return redirect(url_for('dashboard'))
+
+    doctor_id = session['user']['id']
+
+    if request.method == 'POST':
+        patient_id = request.form.get('patient_id')
+
+        patient_name = request.form.get('patient_name_hidden') 
+        details = request.form.get('report_details')
+        
+        result = DoctorController.create_report(doctor_id, patient_id, patient_name, details)
+        
+        if result['success']:
+            flash('Report saved successfully', 'success')
+        else:
+            flash('Error saving report', 'error')
+            
+        return redirect(url_for('patient_report'))
+
+    patients = DoctorController.get_all_patients()
+    
+    reports_result = DoctorController.get_doctor_reports(doctor_id)
+    reports = reports_result.get('reports', [])
+
+    return render_template('patient-report.html', patients=patients, reports=reports)
 
 @app.route('/schedule-management', methods=['GET', 'POST'])
 @login_required
@@ -381,4 +416,4 @@ def cancel_appointment():
         return redirect(url_for('appointments'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
