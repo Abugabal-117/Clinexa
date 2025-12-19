@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 # Tests package
-=======
-
->>>>>>> main
