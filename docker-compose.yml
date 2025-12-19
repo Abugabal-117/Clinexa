@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: clinexa_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/app/src
+      - ./src/data:/app/src/data
+    environment:
+      - FLASK_APP=src/app.py
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1
+    networks:
+      - clinexa-network
+    restart: unless-stopped
+
+  tests:
+    build: .
+    container_name: clinexa_tests
+    working_dir: /app
+    command: python run_tests_dispatch.py all
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - clinexa-network
+    depends_on:
+      - web
+    profiles:
+      - test
+
+networks:
+  clinexa-network:
+    driver: bridge
