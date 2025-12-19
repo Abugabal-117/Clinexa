@@ -27,6 +27,12 @@ def get_login_page():
 def get_signup_page():
     return render_template('signup.html')
 
+
+@app.route('/doctor-login')
+def doctor_login():
+    return render_template('doctor-login.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -92,7 +98,10 @@ def dashboard():
         appointments = appointments_result['appointments'] if appointments_result['success'] else []
         return render_template('dashboard.html', user=user, appointments=appointments)
     
-    return render_template('dashboard.html', user=user, appointments=[])
+    elif role == 'doctor':
+        return render_template('doctor-dashboard.html', user=user)
+    
+    return redirect(url_for('home'))
 
 @app.route('/doctor-profile', defaults={'doctor_id': None})
 @app.route('/doctor-profile/<doctor_id>')
@@ -381,4 +390,4 @@ def cancel_appointment():
         return redirect(url_for('appointments'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
