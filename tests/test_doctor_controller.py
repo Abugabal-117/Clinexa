@@ -13,6 +13,9 @@ import shutil
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
 
 from controllers.doctor_controller import DoctorController
+from models.doctor import Doctor
+from core.authentication import Authentication
+from repositories.repository_factory import RepositoryFactory
 
 
 class TestDoctorController(unittest.TestCase):
@@ -32,6 +35,18 @@ class TestDoctorController(unittest.TestCase):
     def setUp(self):
         """Set up test data for each test"""
         self.doctor_id = "doctor_001"
+        
+        # Create a doctor for testing
+        doctor_repo = RepositoryFactory.get_doctor_repository()
+        doctor = Doctor(
+            user_id=self.doctor_id,
+            email="testdoctor@example.com",
+            password_hash=Authentication.hash_password("TestPassword123"),
+            first_name="Test",
+            last_name="Doctor",
+            specialization="General Practice"
+        )
+        doctor_repo.save(doctor)
     
     def test_add_available_time_success(self):
         """Test adding an available time slot for a doctor"""
