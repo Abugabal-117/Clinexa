@@ -15,15 +15,27 @@ from core.authentication import Authentication
 def test_env():
     test_dir = tempfile.mkdtemp()
     os.environ['DATA_DIR'] = test_dir
+    
+    # Reset CSVManager singleton to use new DATA_DIR
+    from core.csv_manager import CSVManager
+    CSVManager._instance = None
+    from threading import Lock
+    CSVManager._lock = Lock()
+    
     yield test_dir
-    # Clear all JSON files before cleanup
+    
+    # Cleanup
     import glob
-    for f in glob.glob(os.path.join(test_dir, '*.json')):
+    for f in glob.glob(os.path.join(test_dir, '*.csv')):
         try:
             os.remove(f)
         except:
             pass
     shutil.rmtree(test_dir, ignore_errors=True)
+    
+    # Reset CSVManager after test
+    CSVManager._instance = None
+    CSVManager._lock = Lock()
 
 
 class TestPatientController:

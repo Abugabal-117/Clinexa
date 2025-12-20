@@ -6,24 +6,31 @@ import shutil
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-@pytest.fixture(scope='session')
-def test_data_dir():
-    temp_dir = tempfile.mkdtemp()
-    src_data_dir = os.path.join(os.path.dirname(__file__), '../src/data')
-    if os.path.exists(src_data_dir):
-        for file in os.listdir(src_data_dir):
-            if file.endswith('.csv'):
-                shutil.copy2(os.path.join(src_data_dir, file), temp_dir)
-    yield temp_dir
-    shutil.rmtree(temp_dir, ignore_errors=True)
+@pytest.fixture(autouse=True)
+def reset_csv_manager():
+    """Reset CSVManager singleton before each test"""
+    from core.csv_manager import CSVManager
+    CSVManager._instance = None
+    CSVManager._lock = __import__('threading').Lock()
+    yield
+    # Reset after test
+    CSVManager._instance = None
+    CSVManager._lock = __import__('threading').Lock()
+
+@pytest.fixture
+def test_data_dir(tmp_path):
+    """Create a temporary test data directory"""
+    return str(tmp_path)
 
 @pytest.fixture
 def app(test_data_dir, monkeypatch):
     monkeypatch.setenv('TESTING', 'True')
+    monkeypatch.setenv('DATA_DIR', test_data_dir)
     
-    # Patch CSVManager to use test data directory
+    # Reset CSVManager to pick up new DATA_DIR
     from core.csv_manager import CSVManager
-    monkeypatch.setattr(CSVManager(), 'data_dir', test_data_dir)
+    CSVManager._instance = None
+    CSVManager._lock = __import__('threading').Lock()
     
     from app import app as flask_app
     
@@ -34,6 +41,10 @@ def app(test_data_dir, monkeypatch):
     })
     
     yield flask_app
+    
+    # Reset CSVManager after test
+    CSVManager._instance = None
+    CSVManager._lock = __import__('threading').Lock()
 
 @pytest.fixture
 def client(app):
