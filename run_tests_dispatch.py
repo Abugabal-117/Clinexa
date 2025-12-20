@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test runner for Clinic System using pytest and unittest
 Supports both pytest and unittest execution with dispatch

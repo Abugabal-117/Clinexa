@@ -1,8 +1,6 @@
-# Clinexa
 
 **Clinexa** is a comprehensive clinical management and appointment booking system designed to streamline interactions between doctors and patients. This project utilizes a layered software architecture to ensure scalability and maintainability, using flat-file (CSV) storage for data persistence.
 
-## 📂 Project Structure
 
 The project follows a Model-View-Controller (MVC) pattern with a Repository layer for data access:
 
@@ -14,7 +12,6 @@ The project follows a Model-View-Controller (MVC) pattern with a Repository laye
 * **`src/data/`**: Storage directory for application data (CSV files).
 * **`templates/` & `static/`**: Frontend views and assets.
 
-## 🚀 Features
 
 * **User Authentication**: Secure Login and Signup for Doctors and Patients.
 * **Role-Based Dashboards**: Distinct interfaces for Doctors and Patients.
@@ -25,7 +22,6 @@ The project follows a Model-View-Controller (MVC) pattern with a Repository laye
 * **Reporting**: View patient reports and appointment history.
 * **Data Persistence**: Custom CSV-based database management system.
 
-## 🛠️ Tech Stack
 
 * **Language**: Python 3.x
 * **Web Framework**: Flask (Inferred)
@@ -34,13 +30,10 @@ The project follows a Model-View-Controller (MVC) pattern with a Repository laye
 * **Testing**: Pytest
 * **Containerization**: Docker & Docker Compose
 
-## ⚙️ Installation & Setup
 
-### Prerequisites
 * Python 3.10+
 * Docker (Optional)
 
-### Local Development
 
 1.  **Clone the repository:**
     ```bash
@@ -65,21 +58,17 @@ The project follows a Model-View-Controller (MVC) pattern with a Repository laye
     ```
     Access the app at `http://localhost:5000` (default).
 
-### 🐳 Running with Docker
 
 1.  **Build and Run using Docker Compose:**
     ```bash
     docker-compose up --build
     ```
 
-## 🧪 Testing
 
 This project maintains high code quality with a comprehensive test suite located in the `tests/` directory.
 
 To run the full test suite:
 ```bash
-# Using the dispatch script
 python run_tests_dispatch.py
 
-# OR using pytest directly
 pytest

@@ -1,11 +1,7 @@
-# Automated Testing Documentation
 
-## Overview
 This document describes the automated testing suite for the Clinic System. The suite includes comprehensive unit tests covering authentication, user management, patient operations, doctor operations, and data models.
 
-## Test Coverage
 
-### 1. Authentication Tests (`test_authentication.py`)
 **Purpose**: Test password hashing and verification functionality
 
 **Test Cases (6 tests)**:
@@ -25,7 +21,6 @@ This document describes the automated testing suite for the Clinic System. The s
 
 ---
 
-### 2. User Controller Tests (`test_user_controller.py`)
 **Purpose**: Test user registration and login functionality
 
 **Test Cases (7 tests)**:
@@ -47,7 +42,6 @@ This document describes the automated testing suite for the Clinic System. The s
 
 ---
 
-### 3. Patient Controller Tests (`test_patient_controller.py`)
 **Purpose**: Test patient-related operations
 
 **Test Cases (5 tests)**:
@@ -66,7 +60,6 @@ This document describes the automated testing suite for the Clinic System. The s
 
 ---
 
-### 4. Doctor Controller Tests (`test_doctor_controller.py`)
 **Purpose**: Test doctor-specific operations
 
 **Test Cases (6 tests)**:
@@ -86,7 +79,6 @@ This document describes the automated testing suite for the Clinic System. The s
 
 ---
 
-### 5. Data Model Tests (`test_models.py`)
 **Purpose**: Test data model creation and serialization
 
 **Test Cases (10 tests)**:
@@ -114,7 +106,6 @@ This document describes the automated testing suite for the Clinic System. The s
 
 ---
 
-### 6. Integration Tests (`test_integration.py`)
 **Purpose**: Test Flask routes and overall application integration
 
 **Test Cases (10 tests)**:
@@ -142,7 +133,6 @@ This document describes the automated testing suite for the Clinic System. The s
 
 ---
 
-## Total Test Count
 **40+ Unit Tests** covering:
 - ✅ Authentication and Security
 - ✅ User Management (Registration & Login)
@@ -152,14 +142,11 @@ This document describes the automated testing suite for the Clinic System. The s
 - ✅ Route Integration
 - ✅ Business Logic Validation
 
-## Running the Tests
 
-### Run All Tests
 ```bash
 python run_tests.py
 ```
 
-### Run Specific Test Module
 ```bash
 python run_tests.py test_authentication
 python run_tests.py test_user_controller
@@ -169,12 +156,10 @@ python run_tests.py test_models
 python run_tests.py test_integration
 ```
 
-### Run with Verbose Output
 ```bash
 python -m unittest discover -s tests -p test_*.py -v
 ```
 
-## Test Structure
 
 ```
 tests/
@@ -188,7 +173,6 @@ tests/
 └── README.md                        # This documentation
 ```
 
-## Key Testing Principles
 
 1. **Independence**: Each test is independent and doesn't rely on other tests
 2. **Isolation**: Tests use temporary directories for data to avoid side effects
@@ -197,7 +181,6 @@ tests/
 5. **Coverage**: Tests cover both success and failure scenarios
 6. **Security**: Tests validate security features like password hashing and lockout
 
-## Test Coverage by Feature
 
 | Feature | Tests | Coverage |
 |---------|-------|----------|
@@ -210,7 +193,6 @@ tests/
 | Routes & Integration | 10 | Page loading, redirects, security |
 | **Total** | **40+** | **Comprehensive coverage** |
 
-## Expected Test Results
 
 When running `python run_tests.py`, you should see output similar to:
 
@@ -225,7 +207,6 @@ Ran 40+ tests in X.XXXs
 OK
 ```
 
-## Future Enhancements
 
 - Add database integration tests
 - Add API endpoint tests

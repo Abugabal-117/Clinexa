@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test runner script for the Clinic System
 Runs all unit tests and generates test reports
@@ -8,21 +7,17 @@ import unittest
 import sys
 import os
 
-# Add src directory to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 
 def run_all_tests():
     """Discover and run all tests"""
-    # Discover all test files in the tests directory
     loader = unittest.TestLoader()
     suite = loader.discover('tests', pattern='test_*.py')
     
-    # Run tests with verbose output
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)
     
-    # Return exit code based on test results
     return 0 if result.wasSuccessful() else 1
 
 
@@ -42,11 +37,9 @@ def run_specific_test(test_module):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        # Run specific test module
         test_module = sys.argv[1]
         exit_code = run_specific_test(test_module)
     else:
-        # Run all tests
         exit_code = run_all_tests()
     
     sys.exit(exit_code)
