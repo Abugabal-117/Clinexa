@@ -1,24 +1,14 @@
-# Docker ignore file
+# Ignore git history (saves huge space)
+.git
+.gitignore
+
+# Ignore local python environments
+venv/
+env/
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv
-*.egg-info/
-dist/
-build/
-.pytest_cache/
-.coverage
-htmlcov/
-*.log
-.DS_Store
-.git/
-.gitignore
-README.md
-docs/
-.pytest_cache/
-*.pem
-*.key
+
+# Ignore local data (so users start fresh or use volumes)
+src/data/*.csv
+!src/data/.keep  # Keep this if you want to preserve the folder structure
