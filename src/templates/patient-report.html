@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Report Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="nav-container">
+        <a href="{{ url_for('dashboard') }}" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <div class="center-content flex-direction-column align-items-center">
+
+        <div class="page-header-text">
+            <h1>Patient Report Management</h1>
+            <p>Generate and view patient medical reports</p>
+        </div>
+
+        <div class="report-grid">
+
+            <div class="content-card left-panel">
+                <div class="report-section-header">
+                    <div class="icon-box-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="report-section-title">Generate Report</h3>
+                </div>
+
+                <form action="{{ url_for('patient_report') }}" method="POST">
+                    <div class="form-group">
+                        <label>Patient Name</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="text" name="patient_name" placeholder="Enter patient name..." required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Patient Details & Diagnosis</label>
+                        <textarea name="report_details" class="form-control report-textarea" rows="8"
+                            placeholder="Enter symptoms, diagnosis, and treatment details..."
+                            required></textarea>
+                    </div>
+
+                    <div class="report-button-group">
+                        <a href="{{ url_for('patient_report') }}" class="btn btn-gray">Cancel</a>
+                        <button type="submit" class="btn btn-blue">Save Report</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="report-section-header">
+                    <div class="icon-box-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="report-section-title">Recent Reports</h3>
+                </div>
+
+                {% if reports and reports|length > 0 %}
+                <div class="reports-list">
+                    {% for report in reports %}
+                    <div class="report-card">
+                        <div class="report-card-header">
+                            <div class="report-avatar">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb"
+                                    stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="report-meta">
+                                <div class="report-patient-name">{{ report.patient_name }}</div>
+                                <div class="report-date">{{ report.created_at[:10] }}</div>
+                            </div>
+                        </div>
+                        <div class="report-content">
+                            {{ report.report_details }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5"
+                        class="empty-state-icon-svg">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <p class="empty-state-message">No reports created yet</p>
+                    <p class="empty-state-submessage">Create your first report using the form</p>
+                </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -25,8 +25,21 @@ class Patient(User):
     
     @classmethod
     def from_dict(cls, data):
-        medical_history = json.loads(data.get('medical_history', '[]'))
-        appointments = json.loads(data.get('appointments', '[]'))
+        try:
+            medical_history_str = data.get('medical_history', '[]')
+            if not medical_history_str or medical_history_str == 'None':
+                medical_history_str = '[]'
+            medical_history = json.loads(medical_history_str)
+        except json.JSONDecodeError:
+            medical_history = []
+            
+        try:
+            appointments_str = data.get('appointments', '[]')
+            if not appointments_str or appointments_str == 'None':
+                appointments_str = '[]'
+            appointments = json.loads(appointments_str)
+        except json.JSONDecodeError:
+            appointments = []
         
         return cls(
             user_id=data['user_id'],

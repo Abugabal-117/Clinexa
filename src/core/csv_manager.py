@@ -18,7 +18,11 @@ class CSVManager:
     def __init__(self):
         if self._initialized:
             return
-        self.data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+        # Check for DATA_DIR environment variable (for testing)
+        if 'DATA_DIR' in os.environ:
+            self.data_dir = os.environ['DATA_DIR']
+        else:
+            self.data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
         os.makedirs(self.data_dir, exist_ok=True)
         self._initialized = True
     

@@ -93,36 +93,18 @@
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                         </svg>
-                        Select Time
+                        Available Times
                     </div>
 
                     <div class="time-grid margin-bottom-25">
-                        <input type="radio" name="time" id="time-09" value="09:00" class="time-radio" required>
-                        <label for="time-09" class="time-slot">09:00 AM</label>
-
-                        <input type="radio" name="time" id="time-10" value="10:00" class="time-radio">
-                        <label for="time-10" class="time-slot">10:00 AM</label>
-
-                        <input type="radio" name="time" id="time-11" value="11:00" class="time-radio">
-                        <label for="time-11" class="time-slot">11:00 AM</label>
-
-                        <input type="radio" name="time" id="time-13" value="13:00" class="time-radio">
-                        <label for="time-13" class="time-slot">01:00 PM</label>
-
-                        <input type="radio" name="time" id="time-14" value="14:00" class="time-radio">
-                        <label for="time-14" class="time-slot">02:00 PM</label>
-
-                        <input type="radio" name="time" id="time-15" value="15:00" class="time-radio">
-                        <label for="time-15" class="time-slot">03:00 PM</label>
-
-                        <input type="radio" name="time" id="time-16" value="16:00" class="time-radio">
-                        <label for="time-16" class="time-slot">04:00 PM</label>
-
-                        <input type="radio" name="time" id="time-17" value="17:00" class="time-radio">
-                        <label for="time-17" class="time-slot">05:00 PM</label>
-
-                        <input type="radio" name="time" id="time-18" value="18:00" class="time-radio">
-                        <label for="time-18" class="time-slot">06:00 PM</label>
+                        {% if available_times and available_times|length > 0 %}
+                            {% for slot in available_times %}
+                            <input type="radio" name="time" id="time-{{ slot.time|replace(':', '-') }}" value="{{ slot.time }}" class="time-radio" required>
+                            <label for="time-{{ slot.time|replace(':', '-') }}" class="time-slot">{{ slot.time }}</label>
+                            {% endfor %}
+                        {% else %}
+                        <p class="color-64748b margin-bottom-25">No available times set by the doctor yet. Please check back later.</p>
+                        {% endif %}
                     </div>
 
 

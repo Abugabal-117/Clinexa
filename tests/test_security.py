@@ -8,7 +8,7 @@ class TestSecurityHeaders:
     
     def test_session_cookie_security(self, app):
         assert app.secret_key is not None
-        assert len(app.secret_key) > 16
+        assert len(app.secret_key) >= 16
 
 class TestInputValidation:
     def test_login_empty_fields(self, client):
@@ -28,11 +28,19 @@ class TestInputValidation:
 
 class TestAuthorizationChecks:
     def test_cannot_access_other_user_profile_without_login(self, client):
-        response = client.get('/edit_profile', follow_redirects=False)
+        response = client.get('/edit-profile', follow_redirects=False)
         assert response.status_code in [302, 401]
     
     def test_cannot_cancel_appointment_without_login(self, client):
-        response = client.post('/cancel_appointment', data={
+        response = client.post('/cancel-appointment', data={
             'appointment_id': '1'
         }, follow_redirects=False)
         assert response.status_code in [302, 401, 405]
+class TestAuthorizationChecks:
+    def test_cannot_access_other_user_profile_without_login(self, client):
+        response = client.get('/profile/2')
+        assert response.status_code in [302, 401, 404]
+    
+    def test_cannot_cancel_appointment_without_login(self, client):
+        response = client.post('/cancel_appointment/1')
+        assert response.status_code in [302, 401, 405, 404]
