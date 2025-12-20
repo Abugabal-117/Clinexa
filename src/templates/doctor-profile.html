@@ -35,21 +35,11 @@
             <div class="content-card doc-profile-card">
                 <div class="doc-header-row">
                     <div class="img-wrapper">
-                        {% if doctor.user_id %}
-                        <img class="doctor-image" src="{{ url_for('static', filename='images/doctors/doc_image.jpg') }}"
-                            alt="{{ doctor.get_full_name() }}"
-                            onerror="this.onerror=null; this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');">
-                        <svg class="doctor-avatar-svg hidden" width="100" height="100" viewBox="0 0 24 24"
-                            fill="#cbd5e1">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        {% else %}
                         <svg class="doctor-avatar-svg" width="100" height="100" viewBox="0 0 24 24" fill="#cbd5e1">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        {% endif %}
+                    </div>
                     </div>
 
                     <div class="doc-info">
