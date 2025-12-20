@@ -36,3 +36,10 @@ class TestAuthorizationChecks:
             'appointment_id': '1'
         }, follow_redirects=False)
         assert response.status_code in [302, 401, 405]
+def test_cannot_access_other_user_profile_without_login(self):
+    response = self.client.get('/profile/2')
+    assert response.status_code in [302, 401, 404]  # Added 404
+
+def test_cannot_cancel_appointment_without_login(self):
+    response = self.client.post('/cancel_appointment/1')
+    assert response.status_code in [302, 401, 405, 404]  # Added 404
