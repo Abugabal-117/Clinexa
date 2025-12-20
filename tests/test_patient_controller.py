@@ -32,9 +32,20 @@ class TestPatientController(unittest.TestCase):
         """Clean up test fixtures"""
         shutil.rmtree(cls.test_dir, ignore_errors=True)
     
+    def setUp(self):
+        """Clear data before each test"""
+        # Clear the data directory to ensure clean state for each test
+        import glob
+        data_files = glob.glob(os.path.join(self.test_dir, '*.json'))
+        for f in data_files:
+            try:
+                os.remove(f)
+            except:
+                pass
+    
     def test_create_patient_success(self):
         """Test successful patient creation"""
-        email = "testpatient@example.com"
+        email = "test_create_patient_success@example.com"
         password = "TestPassword123"
         first_name = "John"
         last_name = "Doe"
@@ -54,7 +65,7 @@ class TestPatientController(unittest.TestCase):
     
     def test_create_patient_duplicate_email(self):
         """Test patient creation with duplicate email"""
-        email = "duplicate@example.com"
+        email = "test_duplicate@example.com"
         password_hash = Authentication.hash_password("Password123")
         
         # Create first patient
@@ -87,7 +98,7 @@ class TestPatientController(unittest.TestCase):
     def test_update_patient_success(self):
         """Test successful patient update"""
         # Create a patient first
-        email = "updatetest@example.com"
+        email = "test_update@example.com"
         password_hash = Authentication.hash_password("Password123")
         
         result = PatientController.create_patient(
@@ -113,7 +124,7 @@ class TestPatientController(unittest.TestCase):
     def test_get_appointments_empty(self):
         """Test getting appointments for a patient with no appointments"""
         # Create a patient
-        email = "appointtest@example.com"
+        email = "test_appointments@example.com"
         password_hash = Authentication.hash_password("Password123")
         
         result = PatientController.create_patient(

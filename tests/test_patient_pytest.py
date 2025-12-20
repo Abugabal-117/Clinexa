@@ -15,14 +15,21 @@ from core.authentication import Authentication
 def test_env():
     test_dir = tempfile.mkdtemp()
     os.environ['DATA_DIR'] = test_dir
-    yield
+    yield test_dir
+    # Clear all JSON files before cleanup
+    import glob
+    for f in glob.glob(os.path.join(test_dir, '*.json')):
+        try:
+            os.remove(f)
+        except:
+            pass
     shutil.rmtree(test_dir, ignore_errors=True)
 
 
 class TestPatientController:
     
     def test_create_patient_success(self, test_env):
-        email = "testpatient@example.com"
+        email = "test_pytest_create_success@example.com"
         password = "TestPassword123"
         first_name = "John"
         last_name = "Doe"
@@ -41,7 +48,7 @@ class TestPatientController:
         assert result['patient'].first_name == first_name
     
     def test_create_patient_duplicate_email(self, test_env):
-        email = "duplicate@example.com"
+        email = "test_pytest_duplicate@example.com"
         password_hash = Authentication.hash_password("Password123")
         
         result1 = PatientController.create_patient(
@@ -69,7 +76,7 @@ class TestPatientController:
         assert isinstance(result['patients'], list)
     
     def test_update_patient_success(self, test_env):
-        email = "updatetest@example.com"
+        email = "test_pytest_update@example.com"
         password_hash = Authentication.hash_password("Password123")
         
         result = PatientController.create_patient(
@@ -92,7 +99,7 @@ class TestPatientController:
             assert update_result['patient'].first_name == "New"
     
     def test_get_appointments_empty(self, test_env):
-        email = "appointtest@example.com"
+        email = "test_pytest_appointments@example.com"
         password_hash = Authentication.hash_password("Password123")
         
         result = PatientController.create_patient(

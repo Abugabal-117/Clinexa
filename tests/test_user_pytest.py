@@ -14,7 +14,14 @@ from core.authentication import Authentication
 def test_env():
     test_dir = tempfile.mkdtemp()
     os.environ['DATA_DIR'] = test_dir
-    yield
+    yield test_dir
+    # Clear all JSON files before cleanup
+    import glob
+    for f in glob.glob(os.path.join(test_dir, '*.json')):
+        try:
+            os.remove(f)
+        except:
+            pass
     shutil.rmtree(test_dir, ignore_errors=True)
 
 
@@ -22,7 +29,7 @@ class TestUserRegistration:
     
     def test_register_patient_success(self, test_env):
         result = UserController.register(
-            email="newpatient@example.com",
+            email="test_user_pytest_register@example.com",
             password="SecurePassword123",
             first_name="John",
             last_name="Doe",
