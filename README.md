@@ -61,7 +61,7 @@ You can run Clinexa easily using standard Docker commands.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone  https://github.com/j4b4l/clinexa.git
+git clone  https://github.com/r4g4b/clinexa.git
 cd clinexa
 
 ```
