@@ -1526,15 +1526,12 @@ body.home-page {
 }
 
 
-
 :root {
-    --doctor-primary: #0284c7; 
+    --doctor-primary: #0284c7;
     --doctor-primary-hover: #0369a1;
     --doctor-bg: #f0f9ff;
     --doctor-surface: #ffffff;
 }
-
-
 .doctor-login-body {
     background-color: var(--doctor-bg);
     min-height: 100vh;
@@ -1588,17 +1585,15 @@ body.home-page {
 }
 
 
-
-
 .doctor-dashboard-body {
-    background-color: #f0f9ff; 
+    background-color: #f0f9ff;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
 }
 
 .doc-header {
-    background-color: #0284c7; 
+    background-color: #0284c7;
     color: white;
     padding: 1rem 2rem;
     display: flex;

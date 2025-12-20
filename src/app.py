@@ -58,6 +58,17 @@ def home():
         return redirect(url_for('dashboard'))
     return render_template('index.html')
 
+def handle_login():
+    return redirect(url_for('login'))
+
+def handle_dashboard():
+    return redirect(url_for('dashboard'))
+
+def get_login_page():
+    return render_template('login.html')
+
+def get_signup_page():
+    return render_template('signup.html')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -113,10 +124,6 @@ def dashboard():
     elif role == 'doctor':
         return render_template('doctor-dashboard.html', user=user)
     return render_template('dashboard.html', user=user, appointments=[])
-
-@app.route('/doctor-login')
-def doctor_login():
-    return render_template('doctor-login.html')
 
 @app.route('/booking', methods=['GET', 'POST'])
 @patient_required
