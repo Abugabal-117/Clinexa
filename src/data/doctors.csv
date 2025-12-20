@@ -1,4 +1,4 @@
 user_id,email,password_hash,first_name,last_name,role,created_at,is_active,specialization,license_number,patients,appointments,available_times
-01,telgayar@clinexa.eg,d886046d08ad554ed1d33a1e2aaf6518d42d3027be920d0cc383a101b362fe21,Dr. Tamer,Elgayar,doctor,2025-12-04T10:05:44.047102,True,Physical Therapy,LIC123,[],[],"[{""date"": ""2025-12-04"", ""time"": ""14:22""}]"
+01,telgayar@clinexa.eg,d886046d08ad554ed1d33a1e2aaf6518d42d3027be920d0cc383a101b362fe21,Dr. Tamer,Elgayar,doctor,2025-12-04T10:05:44.047102,True,Physical Therapy,LIC123,[],[],"[{""date"": ""Sunday"", ""time"": ""15:33""}, {""date"": ""Thursday"", ""time"": ""05:55""}]"
 ef9c6d05,mohammed@maherfff,6009c2181508fd67a938fe0d32e7b0ec964b8ec27088ca607fdfa26093ff74b3,mohammed ,maher,doctor,2025-12-12T13:27:36.955910,True,fd,,[],[],[]
 doctor_001,testdoctor@example.com,d519397a4e89a7a66d28a266ed00a679bdee93fddec9ebba7d01ff27c39c1a99,Test,Doctor,doctor,2025-12-20T10:40:51.589750,True,General Practice,,[],[],[]
