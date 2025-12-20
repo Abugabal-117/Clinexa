@@ -1,7 +1,7 @@
-
+**
 **Clinexa** is a Clinical Management System designed to streamline interactions between doctors and patients. It features a complete appointment booking engine, role-based dashboards, and a custom CSV-based persistence layer, developed for the CSAI203 Software Engineering course.
 
-## 📂 Project Architecture
+## Project Architecture
 
 The application implements a strict **MVC (Model-View-Controller)** architecture with a **Repository Pattern** to decouple business logic from data access.
 
@@ -11,7 +11,7 @@ The application implements a strict **MVC (Model-View-Controller)** architecture
 * **`src/data/`**: Flat-file database storage containing all system records in CSV format.
 * **`src/core/`**: Core system utilities including Authentication and CSV management.
 
-## 🚀 Key Features
+## Key Features
 
 * **Role-Based Access**:
     * **Doctors**: Manage schedules, view appointments, and upload reports.
@@ -53,7 +53,7 @@ The application implements a strict **MVC (Model-View-Controller)** architecture
     ```
     Access at: `http://localhost:5000`
 
-### 🐳 Running with Docker (Recommended)
+###  Running with Docker (Recommended)
 
 To run the application in an isolated environment:
 
@@ -68,3 +68,4 @@ To run the full test suite:
 python run_tests_dispatch.py
 
 pytest
+**
