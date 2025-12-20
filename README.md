@@ -2,9 +2,7 @@
 # Clinexa
 
 **Clinexa** is a Clinical Management System designed to streamline interactions between doctors and patients. It features a complete appointment booking engine, role-based dashboards, and a custom CSV-based persistence layer, developed for the CSAI203 Software Engineering course.
-
-![Build Status](https://github.com/j4b4l/clinexa/actions/workflows/ci-cd.yml/badge.svg)
-
+ 
 ## Project Architecture
 
 The application implements a strict **MVC (Model-View-Controller)** architecture with a **Repository Pattern** to decouple business logic from data access.
@@ -43,7 +41,7 @@ Use these credentials to test the application's different roles.
 | :--- | :--- | :--- |
 | **Doctor** | Clinexa_Doctor@clinexa.eg | Doctor_Password_123 | 
 
-*(Note: These users must exist in src/data/doctors.csv and src/data/patients.csv. If they don't, please use the credentials found in those files).*
+ 
 
 ## Tech Stack
 
@@ -63,7 +61,7 @@ You can run Clinexa easily using standard Docker commands.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone [https://github.com/j4b4l/clinexa.git](https://github.com/j4b4l/clinexa.git)
+git clone  https://github.com/j4b4l/clinexa.git
 cd clinexa
 
 ```
