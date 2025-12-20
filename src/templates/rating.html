@@ -12,7 +12,7 @@
 
     <div class="rating-page-wrapper">
         <div class="header-container">
-            <a href="{{ url_for('doctor_profile') }}" class="btn-back">
+            <a href="{{ url_for('about_doctor') }}" class="btn-back">
                 <svg class="svg-icon-arrow-left" viewBox="0 0 24 24">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
@@ -24,7 +24,11 @@
         <div class="rating-card">
             <div class="text-center">
                 <h2 class="rating-title">Rate Your Experience</h2>
+                {% if doctor %}
+                <p class="rating-subtitle">Share your feedback about <strong>{{ doctor.get_full_name() }}</strong></p>
+                {% else %}
                 <p class="rating-subtitle">Share your feedback about your doctor</p>
+                {% endif %}
             </div>
 
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -47,7 +51,7 @@
                 </a>
             </div>
             {% else %}
-            <form method="POST" action="{{ url_for('rating') }}" id="ratingForm" onsubmit="return validateRatingForm()">
+            <form method="POST" action="{{ url_for('rating', doctor_id=request.args.get('doctor_id', '')) }}" id="ratingForm" onsubmit="return validateRatingForm()">
                 <input type="hidden" name="doctor_id" value="{{ doctor_id }}">
 
                 <div class="rating-stars-wrapper">

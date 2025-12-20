@@ -315,7 +315,23 @@ def forgot_password(): return render_template('forgot-password.html')
 def reset_password(): return render_template('reset-password.html')
 @app.route('/rating', methods=['GET', 'POST'])
 @patient_required
-def rating(): return redirect(url_for('dashboard'))
+def rating():
+    doctor_id = request.args.get('doctor_id') or request.form.get('doctor_id')
+    if request.method == 'POST':
+        rating_value = request.form.get('rating')
+        comment = request.form.get('comment')
+        
+        if rating_value and doctor_id:
+            PatientController.submit_feedback(session['user']['id'], doctor_id, int(rating_value), comment)
+            flash('Thank you for your feedback!', 'success')
+            return redirect(url_for('about_doctor'))
+    
+    doctor = None
+    if doctor_id:
+        doctor_result = DoctorController.get_doctor(doctor_id)
+        doctor = doctor_result.get('doctor') if doctor_result['success'] else None
+    
+    return render_template('rating.html', doctor=doctor)
 
 if __name__ == '__main__':
     app.run(debug=True)

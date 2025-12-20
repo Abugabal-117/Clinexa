@@ -1,1 +1,3 @@
 user_id,email,password_hash,first_name,last_name,role,created_at,is_active,date_of_birth,medical_history,appointments
+52982f44,ahmed@ahmed.com,31afeb26e9eaf5b204f8f2df6550e67c0b6154b4b4e342b4d970085d71db5a77,ahmed ,ragab,patient,2025-12-20T13:42:17.177211,True,,[],[]
+e2127bbf,test@example.com,hashed_password,Test,Patient,patient,2025-12-20T13:55:27.050448,True,,[],[]

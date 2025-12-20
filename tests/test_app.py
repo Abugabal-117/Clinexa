@@ -17,6 +17,10 @@ class TestBasicRoutes:
     def test_logout_redirect(self, client):
         response = client.get('/logout', follow_redirects=False)
         assert response.status_code == 302
+    
+    def test_rating_page_requires_login(self, client):
+        response = client.get('/rating', follow_redirects=False)
+        assert response.status_code in [302, 401]
 
 class TestAuthentication:
     def test_login_with_invalid_credentials(self, client):
