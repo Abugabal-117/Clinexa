@@ -25,3 +25,4 @@ b2f6e500,test_pytest_duplicate@example.com,008c70392e3abfbd0fa47bbc2ed96aa99bd49
 f6d60429,test_pytest_appointments@example.com,008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601,Test,Patient,patient,2025-12-20T02:03:57.313665,True,,[],[]
 e55b4ca5,newpatient@example.com,245b22dce938051efc28cf4364928fa26e171db139755311a93703ba65fd6d07,John,Doe,patient,2025-12-20T02:03:57.358557,True,,[],[]
 2d5954ed,test_user_pytest_register@example.com,245b22dce938051efc28cf4364928fa26e171db139755311a93703ba65fd6d07,John,Doe,patient,2025-12-20T02:03:57.376809,True,,[],[]
+364aca05,test@example.com,008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601,John,Doe,patient,2025-12-20T02:07:44.868343,True,,[],[]
