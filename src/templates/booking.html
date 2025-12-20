@@ -6,6 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Appointment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        
+        .days-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .day-column-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .day-column-card:hover {
+            border-color: #0284c7;
+            background: #f0f9ff;
+        }
+
+        .day-header {
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        
+        .time-slots-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .slot-radio-hidden {
+            display: none; 
+        }
+
+        .slot-label-btn {
+            display: block;
+            padding: 10px;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            color: #0284c7;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slot-label-btn:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+        }
+
+        
+        .slot-radio-hidden:checked + .slot-label-btn {
+            background: #0284c7;
+            color: white;
+            border-color: #0284c7;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +94,6 @@
         <div class="profile-container">
 
             {% if doctor %}
-            <!-- SECTION 1: Doctor Information -->
             <div class="content-card doc-profile-card">
                 <div class="doc-header-row">
                     <div class="img-wrapper">
@@ -36,157 +105,95 @@
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                     </div>
-
                     <div class="doc-info">
-                        <h1>{{ doctor.get_full_name() }}</h1>
+                        <h1>Dr. {{ doctor.get_full_name() }}</h1>
                         <span class="doc-specialty">{{ doctor.specialization }}</span>
-
-                        <div class="rating-row">
-                            <div class="stars">
-                                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                    </path>
-                                </svg>
-                                <span class="rating-text">{{ feedback|length }} reviews</span>
-                            </div>
-                        </div>
-
-                        <p class="doc-bio">
-                            Professional healthcare provider dedicated to your wellbeing.
-                            Book your appointment below to get personalized medical care.
-                        </p>
+                        <p class="doc-bio">Select an available time slot below to book your appointment.</p>
                     </div>
                 </div>
             </div>
             {% endif %}
 
-            <!-- SECTION 2: Booking Form -->
             <div class="content-card booking-container">
-                <h2 class="margin-bottom-5">Book an Appointment</h2>
-                <p class="color-64748b margin-bottom-25">Select a day and time that works for you</p>
+                <h2 class="margin-bottom-5">Available Appointments</h2>
+                <p class="color-64748b margin-bottom-25">Select a time from the available days below.</p>
 
-                <form method="POST" action="{{ url_for('booking') }}" id="bookingForm">
-                    <!-- Auto-select the only doctor (hidden field) -->
-                    {% if doctors and doctors|length > 0 %}
-                    <input type="hidden" name="doctor_id" value="{{ doctors[0].user_id }}">
-                    {% endif %}
-
-                    <!-- Date Selection -->
-                    <div class="section-header">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        Select Date
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="padding: 10px; border-radius: 6px; margin-bottom: 15px; background: #fee2e2; color: #991b1b;">
+                        {{ message }}
                     </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
 
-                    <input type="date" name="date" id="dateInput" required class="form-control">
-
-                    <!-- Time Selection -->
-                    <div class="section-header">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        Available Times
-                    </div>
-
-                    <div class="time-grid margin-bottom-25">
-                        {% if available_times and available_times|length > 0 %}
-                            {% for slot in available_times %}
-                            <input type="radio" name="time" id="time-{{ slot.time|replace(':', '-') }}" value="{{ slot.time }}" class="time-radio" required>
-                            <label for="time-{{ slot.time|replace(':', '-') }}" class="time-slot">{{ slot.time }}</label>
+                <form method="POST" action="{{ url_for('booking') }}">
+                    
+                    {% if weekly_schedule %}
+                        <div class="days-grid-container">
+                            {% for day, times in weekly_schedule.items() %}
+                            <div class="day-column-card">
+                                <div class="day-header">{{ day }}</div>
+                                <div class="time-slots-list">
+                                    {% for time in times %}
+                                        <input type="radio" name="slot_selection" id="{{ day }}-{{ time }}" value="{{ day }}|{{ time }}" class="slot-radio-hidden" required>
+                                        <label for="{{ day }}-{{ time }}" class="slot-label-btn">
+                                            {{ time }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
                             {% endfor %}
-                        {% else %}
-                        <p class="color-64748b margin-bottom-25">No available times set by the doctor yet. Please check back later.</p>
-                        {% endif %}
-                    </div>
+                        </div>
 
+                        <div class="section-header">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            </svg>
+                            Reason for Visit (Optional)
+                        </div>
+                        <textarea name="reason" class="form-control" rows="3" placeholder="Describe your symptoms..."></textarea>
 
-                    <!-- Reason -->
-                    <div class="section-header">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="12" y1="18" x2="12" y2="12"></line>
-                            <line x1="9" y1="15" x2="15" y2="15"></line>
-                        </svg>
-                        Reason for Visit (Optional)
-                    </div>
+                        <button type="submit" class="confirm-btn btn-blue width-100 padding-14 border-none cursor-pointer margin-top-20">
+                            Confirm Appointment
+                        </button>
 
-                    <textarea name="reason" class="form-control" rows="3"
-                        placeholder="Describe your symptoms or reason for the appointment..."></textarea>
-
-                    <button type="submit" class="confirm-btn btn-blue width-100 padding-14 border-none cursor-pointer">
-                        Confirm Booking
-                    </button>
+                    {% else %}
+                        <div style="background: #f8fafc; padding: 40px; border-radius: 12px; text-align: center; border: 1px dashed #cbd5e1;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" style="margin-bottom: 10px;">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <h3 style="color: #64748b; margin: 0;">No Available Slots</h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem;">The doctor has no openings at the moment.</p>
+                        </div>
+                    {% endif %}
+                    
                 </form>
             </div>
 
-            <!-- SECTION 3: Client Feedback -->
             <div class="content-card">
                 <h3 class="section-title">Patient Reviews</h3>
-
-                {% if feedback and feedback|length > 0 %}
-                <div class="exp-grid" id="feedback-container">
-                    {% for item in feedback[:5] %}
+                {% if feedback %}
+                <div class="exp-grid">
+                    {% for item in feedback[:3] %}
                     <div class="exp-item feedback-item">
-                        <div class="exp-icon-box">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                </path>
-                            </svg>
-                        </div>
                         <div class="exp-text">
                             <h4>Rating: {{ item.rating }}/5</h4>
                             <p>{{ item.comment or 'No comment provided' }}</p>
-                            <p class="color-94a3b8 font-size-12 margin-top-5">{{ item.created_at }}</p>
                         </div>
                     </div>
                     {% endfor %}
-                    {% if feedback|length > 5 %}
-                    <input type="checkbox" id="show-more-toggle" class="show-more-checkbox">
-                    {% for item in feedback[5:] %}
-                    <div class="exp-item feedback-item feedback-item-hidden">
-                        <div class="exp-icon-box">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="exp-text">
-                            <h4>Rating: {{ item.rating }}/5</h4>
-                            <p>{{ item.comment or 'No comment provided' }}</p>
-                            <p class="color-94a3b8 font-size-12 margin-top-5">{{ item.created_at }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="show-more-container">
-                        <label for="show-more-toggle" class="btn btn-outline-blue show-more-label">
-                            <span class="show-more-text">Show More Feedbacks</span>
-                            <span class="show-less-text">Show Less Feedbacks</span>
-                        </label>
-                    </div>
-                    {% endif %}
                 </div>
                 {% else %}
-                <p class="color-64748b">No reviews yet. Be the first to leave feedback!</p>
+                <p class="color-64748b">No reviews yet.</p>
                 {% endif %}
             </div>
 
         </div>
     </div>
-
-
-
 </body>
-
 </html>

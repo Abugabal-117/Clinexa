@@ -6,13 +6,9 @@ import os
 
 class DoctorController:
     
-    # --- 1. دالة ذكية لتحديد مسار الملفات مهما تغير مكان الفولدر ---
     @staticmethod
     def _get_data_file_path(filename):
-        # بنجيب مسار الملف الحالي (doctor_controller.py)
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        # بنرجع خطوة لورا عشان نوصل لفولدر src، وبعدين ندخل data
-        # الهيكل المتوقع: src/controllers/.. -> src/data/filename
         base_dir = os.path.dirname(current_dir) 
         data_path = os.path.join(base_dir, 'data', filename)
         return data_path
@@ -40,7 +36,6 @@ class DoctorController:
 
     @staticmethod
     def add_available_time(doctor_id, date, time):
-        """Add an available time slot for the doctor"""
         doctor_repo = RepositoryFactory.get_doctor_repository()
         doctor = doctor_repo.get_by_id(doctor_id)
         
@@ -49,7 +44,6 @@ class DoctorController:
         
         available_slot = {'date': date, 'time': time}
         
-        # Avoid duplicates
         if available_slot not in doctor.available_times:
             doctor.available_times.append(available_slot)
             doctor_repo.save(doctor)
@@ -59,7 +53,6 @@ class DoctorController:
 
     @staticmethod
     def remove_available_time(doctor_id, date, time):
-        """Remove an available time slot for the doctor"""
         doctor_repo = RepositoryFactory.get_doctor_repository()
         doctor = doctor_repo.get_by_id(doctor_id)
         
@@ -77,7 +70,6 @@ class DoctorController:
 
     @staticmethod
     def get_available_times(doctor_id):
-        """Get all available time slots for a doctor"""
         doctor_repo = RepositoryFactory.get_doctor_repository()
         doctor = doctor_repo.get_by_id(doctor_id)
         
@@ -88,7 +80,6 @@ class DoctorController:
 
     @staticmethod
     def remove_patient(doctor_id, patient_id):
-        """Remove a patient from doctor's patient list"""
         doctor_repo = RepositoryFactory.get_doctor_repository()
         doctor = doctor_repo.get_by_id(doctor_id)
         
@@ -102,23 +93,17 @@ class DoctorController:
         
         return {'success': False, 'message': 'Patient not found'}
 
-    # --- 2. دوال التقارير الجديدة (محدثة لتعمل مع patients.csv) ---
-
     @staticmethod
     def get_all_patients():
-        """Get all patients from patients.csv directly"""
         patients = []
-        # استخدام الدالة الذكية لتحديد المسار
         patients_path = DoctorController._get_data_file_path('patients.csv')
         
-        # طباعة للمساعدة في التتبع (Debug)
         print(f"DEBUG: Reading patients from: {patients_path}")
 
         try:
             with open(patients_path, mode='r', encoding='utf-8-sig') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    # تعديل بسيط: لو الملف بيستخدم patient_id وال HTML عايز user_id
                     if 'patient_id' in row and 'user_id' not in row:
                         row['user_id'] = row['patient_id']
                     
@@ -132,11 +117,9 @@ class DoctorController:
 
     @staticmethod
     def create_report(doctor_id, patient_id, patient_name, details):
-        """Create a new medical report"""
         report_path = DoctorController._get_data_file_path('reports.csv')
         file_exists = os.path.isfile(report_path)
         
-        # التأكد من وجود الفولدر
         os.makedirs(os.path.dirname(report_path), exist_ok=True)
         
         try:
@@ -162,7 +145,6 @@ class DoctorController:
 
     @staticmethod
     def get_doctor_reports(doctor_id):
-        """Get all reports created by a specific doctor"""
         reports = []
         report_path = DoctorController._get_data_file_path('reports.csv')
         
