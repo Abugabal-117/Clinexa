@@ -334,4 +334,4 @@ def rating():
     return render_template('rating.html', doctor=doctor)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
