@@ -40,7 +40,7 @@ The application implements a strict **MVC (Model-View-Controller)** architecture
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/r4g4b/Clinexa.git](https://github.com/r4g4b/Clinexa.git)
+    git clone https://github.com/r4g4b/Clinexa.git
     cd Clinexa
     ```
 
