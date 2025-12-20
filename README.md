@@ -41,9 +41,7 @@ Use these credentials to test the application's different roles.
 
 | Role | Email | Password |
 | :--- | :--- | :--- |
-| **Doctor** | dr.smith@clinexa.com | pass123 |
-| **Patient** | jane.doe@gmail.com | pass123 |
-| **Admin** | admin@clinexa.com | admin123 |
+| **Doctor** | Clinexa_Doctor@clinexa.eg | Doctor_Password_123 | 
 
 *(Note: These users must exist in src/data/doctors.csv and src/data/patients.csv. If they don't, please use the credentials found in those files).*
 
@@ -122,6 +120,4 @@ docker run clinexa-test python run_tests_dispatch.py all
 ## Authors
 
 **CSAI203 - Team 26**
-
-```
- 
+Contact: s-ahmed.ragab@zewailcity.edu.eg
