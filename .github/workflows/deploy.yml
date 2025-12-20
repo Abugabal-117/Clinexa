@@ -1,5 +1,4 @@
 name: Deploy
-
 on:
   push:
     branches: [ main, master ]
@@ -29,7 +28,13 @@ jobs:
     
     - name: Create deployment artifact
       run: |
-        tar -czf clinexa-${{ github.sha }}.tar.gz src/ requirements.txt README.md
+        tar -czf clinexa-${{ github.sha }}.tar.gz \
+          src/ \
+          requirements.txt \
+          Dockerfile \
+          docker-compose.yml \
+          static/ \
+          .env.example
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
