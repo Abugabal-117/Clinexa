@@ -1,5 +1,0 @@
-- clear temp data and reports and schedule
-- let us store a new data but leave same structure of all data models and csv files.
-- just store doctor username as: Clinexa_Doctor and password: Doctor_Password_123
-- Change Doctor info to be: Dr. Hend Kotb and description: Dr. Hend is a Therapist and add some info. It's Doctor in ZC Wellness Unit.
-- remove Doctor image 
