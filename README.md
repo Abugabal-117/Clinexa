@@ -1,6 +1,4 @@
-Here is the clean, emoji-free `README.md` in a single block.
-
-```markdown
+ 
 # Clinexa
 
 **Clinexa** is a Clinical Management System designed to streamline interactions between doctors and patients. It features a complete appointment booking engine, role-based dashboards, and a custom CSV-based persistence layer, developed for the CSAI203 Software Engineering course.
@@ -126,5 +124,4 @@ docker run clinexa-test python run_tests_dispatch.py all
 **CSAI203 - Team 26**
 
 ```
-
-```
+ 
