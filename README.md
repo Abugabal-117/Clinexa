@@ -1,8 +1,7 @@
- 
 # Clinexa
 
 **Clinexa** is a Clinical Management System designed to streamline interactions between doctors and patients. It features a complete appointment booking engine, role-based dashboards, and a custom CSV-based persistence layer, developed for the CSAI203 Software Engineering course.
- 
+
 ## Project Architecture
 
 The application implements a strict **MVC (Model-View-Controller)** architecture with a **Repository Pattern** to decouple business logic from data access.
@@ -39,9 +38,7 @@ Use these credentials to test the application's different roles.
 
 | Role | Email | Password |
 | :--- | :--- | :--- |
-| **Doctor** | Clinexa_Doctor@clinexa.eg | Doctor_Password_123 | 
-
- 
+| **Doctor** | Clinexa_Doctor@clinexa.eg | Doctor_Password_123 |
 
 ## Tech Stack
 
@@ -53,7 +50,7 @@ Use these credentials to test the application's different roles.
 
 ## Installation & Setup
 
-You can run Clinexa easily using standard Docker commands.
+We recommend running Clinexa by pulling the pre-built image from Docker Hub.
 
 ### Prerequisites
 * Docker Desktop or Docker Engine installed.
@@ -61,17 +58,17 @@ You can run Clinexa easily using standard Docker commands.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone  https://github.com/r4g4b/clinexa.git
+git clone [https://github.com/r4g4b/clinexa.git](https://github.com/r4g4b/clinexa.git)
 cd clinexa
 
 ```
 
-### Step 2: Build the Docker Image
+### Step 2: Pull the Docker Image
 
-Run this command in the terminal to package the application.
+Instead of building manually, pull the latest verified version directly from the cloud.
 
 ```bash
-docker build -t clinexa-app .
+docker pull j4b4l/clinexa:latest
 
 ```
 
@@ -80,14 +77,24 @@ docker build -t clinexa-app .
 Start the container and map port 5000.
 
 ```bash
-docker run -p 5000:5000 clinexa-app
+docker run -p 5000:5000 j4b4l/clinexa:latest
 
 ```
 
-*(Optional: To keep data saved after stopping the app, you can map the data folder)*:
+*(Optional: To keep data saved locally, map the data folder)*:
 
 ```bash
-docker run -p 5000:5000 -v $(pwd)/src/data:/app/src/data clinexa-app
+docker run -p 5000:5000 -v $(pwd)/src/data:/app/src/data j4b4l/clinexa:latest
+
+```
+
+### Alternative: Build Locally
+
+If you prefer to build the image from source on your machine:
+
+```bash
+docker build -t clinexa-app .
+docker run -p 5000:5000 clinexa-app
 
 ```
 
