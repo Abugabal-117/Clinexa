@@ -58,8 +58,13 @@
                     </div>
 
                     <div class="doc-info">
+                        {% if doctor %}
                         <h1>{{ doctor.get_full_name() }}</h1>
                         <span class="doc-specialty">{{ doctor.specialization or 'General Practitioner' }}</span>
+                        {% else %}
+                        <h1>Our Medical Team</h1>
+                        <span class="doc-specialty">Professional Healthcare Providers</span>
+                        {% endif %}
 
                         <div class="rating-row">
                             <div class="stars">
@@ -89,6 +94,7 @@
             <div class="content-card">
                 <h3 class="section-title">Doctor Information</h3>
                 <div class="padding-20">
+                    {% if doctor %}
                     <div class="doctor-info-item">
                         <strong class="doctor-info-label">Full Name:</strong>
                         <p class="doctor-info-value">{{ doctor.get_full_name() }}</p>
@@ -109,6 +115,9 @@
                         <strong class="doctor-info-label">Email:</strong>
                         <p class="doctor-info-value">{{ doctor.email }}</p>
                     </div>
+                    {% else %}
+                    <p class="color-64748b">Doctor information not available.</p>
+                    {% endif %}
                 </div>
             </div>
 
@@ -177,6 +186,7 @@
                     Book Appointment
                 </a>
 
+                {% if doctor %}
                 <a href="{{ url_for('rating', doctor_id=doctor.user_id) }}"
                     class="btn btn-outline-blue display-flex-center text-decoration-none">
                     <svg class="svg-icon margin-right-8px" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -185,6 +195,7 @@
                     </svg>
                     Rate Doctor
                 </a>
+                {% endif %}
             </div>
             {% elif not session.get('user') %}
             <div class="action-buttons-row">

@@ -125,6 +125,10 @@ def dashboard():
         return render_template('doctor-dashboard.html', user=user)
     return render_template('dashboard.html', user=user, appointments=[])
 
+@app.route('/doctor-login')
+def doctor_login():
+    return render_template('doctor-login.html')
+
 @app.route('/booking', methods=['GET', 'POST'])
 @patient_required
 def booking():
