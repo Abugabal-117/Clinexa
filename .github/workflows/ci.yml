@@ -6,103 +6,119 @@ on:
   pull_request:
     branches: [ main, master, develop ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-    
+      uses: actions/checkout@v4
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-    
-    - name: Cache pip dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    
+        python-version: '3.12'
+        cache: 'pip'   # replaces the separate actions/cache step
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
-    - name: Run linting with flake8
+        pip install pytest pytest-cov flake8
+
+    - name: Lint (fail on syntax errors / undefined names)
       run: |
-        pip install flake8
         flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    - name: Lint (style, informational only)
+      run: |
         flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       continue-on-error: true
-    
+
     - name: Run unit tests
       run: |
-        python -m pytest tests/ -v --cov=src --cov-report=xml --cov-report=html
-    
+        python -m pytest tests/ -v --cov=src --cov-report=xml
+
     - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.xml
+        files: ./coverage.xml
         flags: unittests
-        name: codecov-umbrella
-      continue-on-error: true
-    
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: false
+
     - name: Test application startup
       run: |
         cd src
-        timeout 10s python app.py || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
-      continue-on-error: false
+        set +e
+        timeout 10s python app.py
+        code=$?
+        # 124 = still running when the timeout hit, which counts as a healthy start
+        if [ "$code" -ne 0 ] && [ "$code" -ne 124 ]; then exit "$code"; fi
 
   security:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-    
+      uses: actions/checkout@v4
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-    
+        python-version: '3.12'
+        cache: 'pip'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
-    - name: Run security check with bandit
+        pip install bandit safety
+
+    - name: Run bandit
       run: |
-        pip install bandit
-        bandit -r src -f json -o bandit-report.json --exit-zero || true
+        bandit -r src -f json -o bandit-report.json --exit-zero
       continue-on-error: true
-    
+
+    - name: Upload bandit report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: bandit-report
+        path: bandit-report.json
+        if-no-files-found: ignore
+
     - name: Check for known vulnerabilities
       run: |
-        pip install safety
-        safety check --json --continue-on-error || true
+        safety check --json
       continue-on-error: true
 
   code-quality:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-    
+      uses: actions/checkout@v4
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-    
+        python-version: '3.12'
+        cache: 'pip'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install -r requirements.txt
         pip install pylint
-    
+
     - name: Run pylint
       run: |
         pylint src --exit-zero --output-format=text --reports=y
